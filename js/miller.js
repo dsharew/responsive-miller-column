@@ -77,6 +77,7 @@
                 newMillerCol.addClass("miller-col-container");
                 newMillerCol.attr("data-category-id", args[1].categoryId);
                 newMillerCol.attr("data-category-name", args[1].categoryName);
+                newMillerCol.attr("data-is-lowest-level", args[1].isLowestLevel);
 
                 var millerColTitle = $("<div/>"), millerColTitleText = $("<div>").addClass("miller-col-title-text").append($("<span/>").text(args[1].categoryName));
 
@@ -170,6 +171,7 @@
             millerColListItem.attr("data-has-children", item.hasChildren);
             millerColListItem.attr("data-item-id", item.itemId);
             millerColListItem.attr("data-parent-id", item.parentId);
+            millerColListItem.attr("data-is-deletable", item.isDeletable);
 
             millerColListItem.append($("<span/>").text(item.itemName).addClass("list-item-text"));
 
@@ -604,6 +606,8 @@
                 data.categoryId = $(currentColContainer).data("category-id");
                 data.itemId = $(this).data("item-id");
                 data.hasChildren = $(this).data("has-children");
+                data.isDeletable = $(this).data("is-deletable");
+                data.isLowestLevel = $(currentColContainer).data("is-lowest-level");
 
                 $(this).trigger("item-selected", data);
 
@@ -621,6 +625,7 @@
 
                 data.categoryId = $(currentColContainer).data("category-id");
                 data.categorName = $(currentColContainer).data("category-name");
+                data.isLowestLevel = $(currentColContainer).data("is-lowest-level");
 
                 if(null != parentColContainer)
                     data.parentId = parentColContainer.find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
@@ -670,6 +675,7 @@
                 data.categorName = $(currentColContainer).data("category-name");
                 data.itemId = $(currentItemContainer).data("item-id");
                 data.hasChildren = $(currentItemContainer).data("has-children");
+                data.isDeletable = $(currentItemContainer).data("is-deletable");
 
                 if(null != parentColContainer)
                     data.parentId = parentColContainer.find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
