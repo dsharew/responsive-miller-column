@@ -1,6 +1,12 @@
-(function($) {
+(function ($) {
 
-    $.fn.millerColumn = function(settings) {
+    $.fn.millerColumn = function (settings) {
+
+        var defaults = {
+            isReadOnly: true
+        }
+
+        $.extend(settings, defaults);
 
         var args = Array.prototype.slice.call(arguments);
 
@@ -19,31 +25,27 @@
 
         var windowWidth = $(window).outerWidth();
 
-        var isObject = function(a) {
-            return (!!a) && (a.constructor === Object);
-        };
-
         //TODO: Rafactor hard coded class and attribute names.
-        
+
         if ("addCol" == args[0]) {
 
-            if(args[1].jquery){
+            if (!isInitialized.call(this)) {
+                console.log("element is is not initialized as a miller column. You need to call jQuery('#id).millerColumn() first.");
+                return;
+            }
+
+
+            if (args[1].jquery) {
 
                 //WARNING: this arg type is deprecated.
-
-                if (!isInitialized.call(this)) {
-                    console.log("element is is not initialized as a miller column. You need to call jQuery('#id).millerColumn() first.");
-                    return;
-                }
-
                 args[1].insertBefore(getLoadingCol.call(this));
 
 
-            }else if(isObject(args[1])){
+            } else if (args[1].categoryId) { //args[1] to detect if it is a valid category obj
 
-                try{
+                try {
 
-                    if(!args[1].categoryId){
+                    if (!args[1].categoryId) {
                         hideLoadingCol.call(this);
                         return;
                     }
@@ -52,25 +54,28 @@
                     var selectedCol = lastVisibleCol.is(".col-loading") ? lastVisibleCol.prev() : lastVisibleCol;
                     var selectedListItem = selectedCol.find(getColListItemSelector()).filter(".selected");
 
-                    if(selectedListItem && selectedListItem.data("item-id") != args[1].parentId){
+                    for (var i = 0; args[1].items && i < args[1].items.length; ++i) {
 
-                        console.warn("Response expired; current selected item is not same as the parent of provided list item.");
-                        hideLoadingCol.call(this);
-                        return;
+                        var item = args[1].items[i];
+
+                        if (selectedListItem.length != 0 && selectedListItem.data("item-id") != item.parentId) {
+
+                            console.warn("Response expired; current selected item is not same as the parent of provided list item.");
+                            hideLoadingCol.call(this);
+                            return;
+
+                        }
 
                     }
 
-                }catch(error){
+
+
+                } catch (error) {
                     console.error(error);
                     hideLoadingCol.call(this);
                 }
 
-                var readOnly = false;
-                try {
-                    readOnly = Boolean(args[2]);
-                }
-                catch (error){}
-
+                var readOnly = $(this).data("is-read-only");
 
                 var newMillerCol = $("<div/>");
 
@@ -79,9 +84,10 @@
                 newMillerCol.attr("data-category-name", args[1].categoryName);
                 newMillerCol.attr("data-is-lowest-level", args[1].isLowestLevel);
 
-                var millerColTitle = $("<div/>"), millerColTitleText = $("<div>").addClass("miller-col-title-text").append($("<span/>").text(args[1].categoryName));
+                var millerColTitle = $("<div/>"),
+                    millerColTitleText = $("<div>").addClass("miller-col-title-text").append($("<span/>").text(args[1].categoryName));
 
-                if (false == readOnly) {
+                if (!readOnly) {
                     var millerColAction = $("<span/>").addClass("miller-col-actions").append($("<i/>").addClass("material-icons").addClass("action-add").text("add"));
                     millerColTitleText.append(millerColAction);
                 }
@@ -93,7 +99,7 @@
 
                 var millerColBody = $("<div/>").addClass("miller-col-body");
 
-                for(var i = 0; i < args[1].items.length; ++i){
+                for (var i = 0; i < args[1].items.length; ++i) {
 
                     var millerColListItem = buildColListItem(args[1].items[i], readOnly)
 
@@ -107,15 +113,15 @@
 
             }
 
-            return;
+            return this;
 
-        }else if("addItem" == args[0]){
+        } else if ("addItem" == args[0]) {
 
             var itemData = args[1];
 
             var listParentItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + itemData.parentId + "']");
 
-            if(null != listParentItem) {
+            if (null != listParentItem) {
                 var alreadyChildren = listParentItem.data("has-children")
                 listParentItem.data("has-children", true);
                 listParentItem.attr("data-has-children", true);
@@ -125,7 +131,7 @@
             }
             var colContainer = getMillerColContainers.call(this).filter("[data-category-id='" + itemData.categoryId + "']");
 
-            if(null == colContainer){
+            if (null == colContainer) {
                 console.log("Cant find category with id: " + itemData.categoryId);
                 return;
             }
@@ -134,38 +140,44 @@
 
             colListItemContainer.append(buildColListItem(itemData, false));
 
+            return this;
 
-        }else if("updateItem" == args[0]){
+
+        } else if ("updateItem" == args[0]) {
 
             var itemData = args[1];
 
             var listItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + itemData.itemId + "']");
 
-            if(null != listItem)
+            if (null != listItem)
                 listItem.find(".list-item-text").text(itemData.itemName);
 
-        }else if("deleteItem" == args[0]){
+            return this;
+
+        } else if ("deleteItem" == args[0]) {
 
             var itemData = args[1];
 
             var listItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + itemData.itemId + "']");
 
-            if(null != listItem)
+            if (null != listItem)
                 listItem.remove();
 
             var listParentItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + itemData.parentId + "']");
 
-            if(null != listParentItem) {
+            if (null != listParentItem) {
                 var childrenLeft = $(this).find(getColListItemSelector()).filter("[data-parent-id = '" + itemData.parentId + "']");
-                if (null == childrenLeft || childrenLeft.length == 0){
+                if (null == childrenLeft || childrenLeft.length == 0) {
                     listParentItem.data("has-children", false);
                     listParentItem.attr("data-has-children", false);
                     listParentItem.find("i").filter(".has-children").remove()
                 }
             }
+
+            return this;
         }
 
-        function buildColListItem(item, readOnly){
+        function buildColListItem(item, readOnly) {
 
             var millerColListItem = $("<div/>").addClass("miller-col-list-item");
             millerColListItem.attr("data-has-children", item.hasChildren);
@@ -175,7 +187,7 @@
 
             millerColListItem.append($("<span/>").text(item.itemName).addClass("list-item-text"));
 
-            if(item.hasChildren)
+            if (item.hasChildren)
                 millerColListItem.append($("<i/>").addClass("material-icons").text("navigate_next").addClass("has-children"));
 
             if (false == readOnly) {
@@ -195,7 +207,7 @@
 
             console.log("About to calculate total width ...........................");
 
-            getMillerColContainers.call(this).each(function() {
+            getMillerColContainers.call(this).each(function () {
 
                 if (isViewHidden.call(this))
                     return;
@@ -234,7 +246,40 @@
         }
 
         function initialize() {
+
+            if (getMillerColsBody.length == 0) { //if user has not build the miller ui structure using html manually
+
+                var preNav = $("<span/>")
+                    .addClass("miller-col-nav nav-prev hidden")
+                    .append($("<i/>")
+                        .addClass("material-icons")
+                        .text("navigate_before"))
+
+
+                var millerColsBody = $("<div/>")
+                    .addClass("miller-cols-body");
+
+                var millerColLoading = $("<div/>")
+                    .addClass("miller-col-loading-container col-loading hidden")
+                    .append($("<div/>")
+                        .addClass("miller-col-body")
+                        .append($("<div/>")
+                            .addClass("miller-col-list-item loading-icon-container")));
+
+                millerColsBody.append(millerColLoading);
+
+                var nextNav = $("<span/>")
+                    .addClass("miller-col-nav nav-next hidden")
+                    .append($("<i/>")
+                        .addClass("material-icons")
+                        .text("navigate_next"));
+
+                $(this).append(preNav).append(millerColsBody).append(nextNav);
+
+            }
+
             $(this).attr("millerized", "");
+            $(this).attr("data-is-read-only", settings.isReadOnly);
         }
 
         function isInitialized() {
@@ -283,6 +328,10 @@
 
         function getColContainerSelector() {
             return ".miller-col-container"
+        }
+
+        function getColContainerSelectorExcludeColLoading() {
+            return ".miller-col-container:not(.col-loading)"
         }
 
 
@@ -505,9 +554,9 @@
 
 
 
-        var waitForFinalEvent = (function() {
+        var waitForFinalEvent = (function () {
             var timers = {};
-            return function(callback, ms, uniqueId) {
+            return function (callback, ms, uniqueId) {
                 if (!uniqueId) {
                     uniqueId = "Don't call this twice without a uniqueId";
                 }
@@ -519,13 +568,22 @@
         })();
 
 
-        return this.each(function() {
+        return this.each(function () {
 
             var millerColumn = this;
 
             init.call(millerColumn);
 
-            getPrevNav.call(millerColumn).on("click", function() {
+            if (args[0] && args[0]["initData"]) { //arg[0] root col
+
+                //hide all cols except col load b/se arg[0] => root col
+                $(getColContainerSelectorExcludeColLoading()).remove();
+
+                $(millerColumn).millerColumn("addCol", args[0]["initData"]);
+
+            }
+
+            getPrevNav.call(millerColumn).on("click", function () {
 
                 showView.call(getFirstVisibleCol.call(millerColumn).prev());
 
@@ -537,7 +595,7 @@
 
             });
 
-            getNextNav.call(millerColumn).on("click", function() {
+            getNextNav.call(millerColumn).on("click", function () {
 
                 showView.call(getLastVisibleCol.call(millerColumn).next());
 
@@ -549,10 +607,10 @@
             });
 
 
-            getMillerColsBody.call(millerColumn).on("DOMNodeInserted", function(event) {
+            getMillerColsBody.call(millerColumn).on("DOMNodeInserted", function (event) {
 
                 //resize only if col is added.
-                if(!$(event.target).is(getColContainerSelector()))
+                if (!$(event.target).is(getColContainerSelector()))
                     return;
 
                 console.log("Dom inserted..");
@@ -564,10 +622,10 @@
             });
 
 
-            getMillerColsBody.call(millerColumn).on("DOMNodeRemoved", function(event) {
+            getMillerColsBody.call(millerColumn).on("DOMNodeRemoved", function (event) {
 
                 //resize only if col is removed.
-                if(!$(event.target).is(getColContainerSelector()))
+                if (!$(event.target).is(getColContainerSelector()))
                     return;
 
                 console.log("Dom removed..");
@@ -579,7 +637,7 @@
             /**
              * Fires item-selected event when an item is selected along with the necessary data.
              */
-            getMillerColsBody.call(millerColumn).on("click", getColListItemSelector(), function() {
+            getMillerColsBody.call(millerColumn).on("click", getColListItemSelector(), function () {
 
                 if ($(this).is(SELECTOR_IS_SELECTED)) return;
 
@@ -590,7 +648,7 @@
                 if (!isNextNavColHidden.call(millerColumn))
                     hideNextNavCol.call(millerColumn);
 
-                if ($(this).data(HAS_CHILDREN) == true){
+                if ($(this).data(HAS_CHILDREN) == true) {
                     showLoadingCol.call(millerColumn);
                 }
 
@@ -615,7 +673,7 @@
 
             });
 
-            getMillerColsBody.call(millerColumn).on("click", ".miller-col-actions .action-add", function(){
+            getMillerColsBody.call(millerColumn).on("click", ".miller-col-actions .action-add", function () {
 
                 var currentColContainer = $(this).closest(getColContainerSelector());
                 var parentColContainer = currentColContainer.prev();
@@ -627,7 +685,7 @@
                 data.categorName = $(currentColContainer).data("category-name");
                 data.isLowestLevel = $(currentColContainer).data("is-lowest-level");
 
-                if(null != parentColContainer)
+                if (null != parentColContainer)
                     data.parentId = parentColContainer.find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
 
                 $(currentColContainer).trigger("add-item", data);
@@ -636,7 +694,7 @@
 
             });
 
-            getMillerColsBody.call(millerColumn).on("click", ".list-item-actions .edit", function(event){
+            getMillerColsBody.call(millerColumn).on("click", ".list-item-actions .edit", function (event) {
 
                 var currentColContainer = $(this).closest(getColContainerSelector());
                 var parentColContainer = currentColContainer.prev();
@@ -650,7 +708,7 @@
                 data.itemId = $(currentItemContainer).data("item-id");
                 data.itemName = $(currentItemContainer).find(".list-item-text").text();
 
-                if(null != parentColContainer)
+                if (null != parentColContainer)
                     data.parentId = parentColContainer.find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
 
                 $(currentItemContainer).trigger("edit-item", data);
@@ -662,7 +720,7 @@
             });
 
 
-            getMillerColsBody.call(millerColumn).on("click", ".list-item-actions .delete", function(event){
+            getMillerColsBody.call(millerColumn).on("click", ".list-item-actions .delete", function (event) {
 
                 var currentColContainer = $(this).closest(getColContainerSelector());
                 var parentColContainer = currentColContainer.prev();
@@ -677,7 +735,7 @@
                 data.hasChildren = $(currentItemContainer).data("has-children");
                 data.isDeletable = $(currentItemContainer).data("is-deletable");
 
-                if(null != parentColContainer)
+                if (null != parentColContainer)
                     data.parentId = parentColContainer.find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
 
                 $(currentItemContainer).trigger("delete-item", data);
@@ -689,9 +747,9 @@
             });
 
 
-            $(window).on("resize.miller_column", function(event) {
+            $(window).on("resize.miller_column", function (event) {
 
-                waitForFinalEvent(function() {
+                waitForFinalEvent(function () {
 
                     console.log("window resized..");
 
