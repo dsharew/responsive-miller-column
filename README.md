@@ -16,8 +16,22 @@ _jQuery_
 
 ```javascript
 
-	var $millerCol = $("#category-miller-cols-container");
+	var $millerCol = $("#miller_col");
 	$millerCol.millerColumn({
+	    initData: rootCategory
+	});
+
+```
+
+<h2> Options </h2>
+<h3> Read only </h3>
+
+The miller column can be either readonly or editable; if it is editable you will action buttons for adding childrens, editing category item, deleting category item. 
+When these action buttons are clicked they will emit the appropriate events. See events section for more info.
+```javascript
+
+	$millerCol.millerColumn({
+	    isReadOnly: true,
 	    initData: rootCategory
 	});
 
