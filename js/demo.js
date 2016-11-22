@@ -1,3 +1,5 @@
+var CONSTANT_MAX_NUMBER_CATEGORIES = 10
+
 function Category() {
 
     var _this = this;
@@ -143,7 +145,7 @@ function initDemoData(db, categoriesCollection, categoryItemCollection) {
     var categoryParentId = null;
     var categoryItemParentId = null;
 
-    for (var i = 1; i < 11; ++i) {
+    for (var i = 1; i <= CONSTANT_MAX_NUMBER_CATEGORIES; ++i) {
 
         var category = new Category();
 
@@ -151,12 +153,11 @@ function initDemoData(db, categoriesCollection, categoryItemCollection) {
         category.setParentId(categoryParentId);
         category.setIsLowestLevel(false);
 
-        if (10 == i) category.setIsLowestLevel(true);
+        if (CONSTANT_MAX_NUMBER_CATEGORIES == i) category.setIsLowestLevel(true);
 
         categoriesCollection.insert(category);
 
         categoryParentId = category.getCategoryId();
-
     }
 
     console.log(categoriesCollection.find());
@@ -169,13 +170,15 @@ function initDemoData(db, categoriesCollection, categoryItemCollection) {
 
 function createChildrenCategoryItems(categoryItemCollection, categoriesCollection, category, parentCategoryItem, numChildren) {
 
-    if (category && category.getIsLowestLevel() || 0 == numChildren) return;
+    if (category && 0 == numChildren) return;
 
-    for (var i = 1; i < numChildren + 1; ++i) {
+    for (var i = 1; i <= numChildren; ++i) {
 
         var categoryItem = new CategoryItem();
 
-        var numChildren2 = parseInt(Math.random() * 5);
+        var numChildren2 = parseInt(Math.random() * 6);
+
+	if (category.getIsLowestLevel()) numChildren2 = 0;
 
         categoryItem.setItemName(category.getCategoryName() + " item " + i);
         categoryItem.setHasChildren(numChildren2 != 0);
@@ -188,7 +191,8 @@ function createChildrenCategoryItems(categoryItemCollection, categoriesCollectio
 
         var childCategory = findCategoryByParentId(categoriesCollection, category.getCategoryId());
 
-        createChildrenCategoryItems(categoryItemCollection, categoriesCollection, childCategory, categoryItem, numChildren2);
+	if (!category.getIsLowestLevel())
+	        createChildrenCategoryItems(categoryItemCollection, categoriesCollection, childCategory, categoryItem, numChildren2);
 
     }
 
