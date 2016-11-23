@@ -87,6 +87,13 @@ Data class that defines the columns.
 		return _this.isLowestLevel
 	    }
 
+	  _this.setItems = function (categoryItems) {
+		_this.items = categoryItems;
+	    }
+	    _this.getItems = function () {
+		return _this.items
+	    }
+
 
 	}
 ```
@@ -225,3 +232,5 @@ Note: the lib does not accepts JSON string, if you have a json string you have t
 	   ]
 	}
 ```
+
+<h5> 

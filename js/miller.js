@@ -41,6 +41,13 @@ function Category() {
     _this.getIsLowestLevel = function () {
         return _this.isLowestLevel
     }
+    
+     _this.setItems = function (categoryItems) {
+        _this.items = categoryItems;
+    }
+    _this.getItems = function () {
+        return _this.items
+    }
 
 
 }
