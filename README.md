@@ -12,31 +12,6 @@ Miller columns (also known as Cascading) are a browsing/visualization technique 
 _jQuery_
 
 
-<h2> How to initialize? </h2>
-
-```javascript
-
-	var $millerCol = $("#miller_col");
-	$millerCol.millerColumn({
-	    initData: rootCategory
-	});
-
-```
-
-<h2> Options </h2>
-<h3> Read only </h3>
-
-The miller column can be either readonly or editable; if it is editable you will action buttons for adding childrens, editing category item, deleting category item. 
-When these action buttons are clicked they will emit the appropriate events. See events section for more info.
-```javascript
-
-	$millerCol.millerColumn({
-	    isReadOnly: true,
-	    initData: rootCategory
-	});
-
-```
-
 <h2> Interfaces </h2>
 The lib defines two data classes so far. 
 <h5> Category </h5>
@@ -234,4 +209,68 @@ Note: the lib does not accepts JSON string, if you have a json string you have t
 	}
 ```
 
-<h5> 
+<h2>Usage:</h2>
+<h3> How to initialize? </h3>
+
+```javascript
+
+	var $millerCol = $("#miller_col");
+	$millerCol.millerColumn({
+	    initData: rootCategory
+	});
+
+```
+```rootCategory``` has to be type of class ```Category``` or any other class that contains at aleast the required props defined with in class ```Category```.
+<h3> Options </h3>
+<h5> Read only </h5>
+
+The miller column can be either readonly or editable; if it is editable you will action buttons for adding childrens, editing category item, deleting category item. 
+When these action buttons are clicked they will emit the appropriate events. See events section for more info.
+```javascript
+
+	$millerCol.millerColumn({
+	    isReadOnly: true,
+	    initData: rootCategory
+	});
+
+```
+
+
+<h3> Adding a Category(Column) </h3>
+
+```javascript
+
+	var $millerCol = $("#miller_col");
+	$millerCol.millerColumn("addCol", category);
+
+```
+
+<h3> Adding a Category Item </h3>
+
+```javascript
+
+	var $millerCol = $("#miller_col");
+	$millerCol.millerColumn("addItem", categoryItem);
+
+```
+```categoryItem``` has to be type of class ```CategoryItem``` or any other class that contains at aleast the required props defined with in class ```CategoryItem```.
+
+
+<h3> Update Category Item </h3>
+
+```javascript
+
+	var $millerCol = $("#miller_col");
+	$millerCol.millerColumn("updateItem", categoryItem);
+
+```
+
+<h3> Delete Category Item </h3>
+
+```javascript
+
+	var $millerCol = $("#miller_col");
+	$millerCol.millerColumn("deleteItem", categoryItem);
+
+```
+
