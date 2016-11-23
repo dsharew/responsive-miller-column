@@ -1,3 +1,127 @@
+function Category() {
+
+    var _this = this;
+
+    _this.categoryId = guid();
+
+    _this.setCategoryId = function (categoryId) {
+
+        _this.categoryId = categoryId;
+
+    }
+
+    _this.getCategoryId = function () {
+        return _this.categoryId;
+    }
+
+
+    _this.setCategoryName = function (categoryName) {
+
+        _this.categoryName = categoryName;
+
+    }
+    _this.getCategoryName = function () {
+        return _this.categoryName;
+    }
+
+
+    _this.setParentId = function (parentId) {
+
+        _this.parentId = parentId;
+
+    }
+    _this.getParentId = function () {
+        return _this.parentId;
+    }
+
+
+    _this.setIsLowestLevel = function (isLowestLevel) {
+        _this.isLowestLevel = isLowestLevel;
+    }
+    _this.getIsLowestLevel = function () {
+        return _this.isLowestLevel
+    }
+
+
+}
+
+function CategoryItem() {
+
+    var _this = this;
+
+    _this.itemId = guid();
+
+    _this.setItemId = function (itemId) {
+
+        _this.itemId = itemId;
+
+    }
+
+    _this.getItemId = function () {
+        return _this.itemId;
+    }
+
+
+    _this.setItemName = function (itemName) {
+
+        _this.itemName = itemName;
+
+    }
+    _this.getItemName = function () {
+        return _this.itemName;
+    }
+
+
+    _this.setParentId = function (parentId) {
+
+        _this.parentId = parentId;
+
+    }
+    _this.getParentId = function () {
+        return _this.parentId;
+    }
+
+
+    _this.setCategoryId = function (categoryId) {
+
+        _this.categoryId = categoryId;
+
+    }
+    _this.getCategoryId = function () {
+        return _this.categoryId;
+    }
+
+
+    _this.setHasChildren = function (hasChildren) {
+        _this.hasChildren = hasChildren;
+    }
+    _this.getHasChildren = function () {
+        return _this.hasChildren
+    }
+
+
+    _this.isDeleteable = true;
+    _this.setIsDeletable = function (isDeleteable) {
+        _this.isDeleteable = isDeleteable;
+    }
+    _this.getIsDeleteable = function () {
+        return _this.isDeleteable
+    }
+
+
+}
+
+function guid() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+}
+
+
 (function ($) {
 
     $.fn.millerColumn = function (settings) {
