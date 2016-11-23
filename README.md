@@ -90,7 +90,8 @@ Data class that defines the columns.
 	  _this.setItems = function (categoryItems) {
 		_this.items = categoryItems;
 	    }
-	    _this.getItems = function () {
+	    
+	  _this.getItems = function () {
 		return _this.items
 	    }
 
