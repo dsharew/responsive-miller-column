@@ -318,9 +318,9 @@ Usage: e.g how to listen for this event:
 Event Name: ```delete-item```
 Data: ```CategoryItem``` object that contains all necessary info about the tobe deleted category item.
 Usage: e.g how to listen for this event:
-	```javascript
-	 $millerCol.on("delete-item", ".miller-col-list-item", function (event, data) {
-		//your logic here.
-	 }
+```javascript
+ $millerCol.on("delete-item", ".miller-col-list-item", function (event, data) {
+	//your logic here.
+ }
 
-	```
+```
