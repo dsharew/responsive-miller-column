@@ -13,7 +13,7 @@ _jQuery_
 
 
 <h2> Interfaces </h2>
-The lib defines two data classes so far. 
+The plugin defines two data classes so far. 
 <h5> Category </h5>
 Data class that defines the columns.
 
@@ -156,7 +156,7 @@ Category contains zero or more CategoryItem.
 
 The plugin also accepts any js object as far as it contains the required props. 
 Here is a valid json object as example. 
-Note: the lib does not accepts JSON string, if you have a json string you have to call ```JSON.parse(jsonString)``` to convert your json string into object.
+Note: the plugin does not accepts JSON string, if you have a json string you have to call ```JSON.parse(jsonString)``` to convert your json string into object.
 
 ```javascript
 	{
@@ -274,3 +274,53 @@ When these action buttons are clicked they will emit the appropriate events. See
 
 ```
 
+<h2>Events:</h2>
+The plugin emits the ff events.
+
+<h3> Item Selected Event </h3>
+
+Event Name: ```item-selected```
+Data: ```CategoryItem``` object that contains all necessary info about the selected category item.
+Usage: e.g how to listen for this event:
+	```javascript
+	 $millerCol.on("item-selected", ".miller-col-list-item", function (event, data) {
+		//your logic here.
+	 }
+
+	```
+
+<h3> Add CategoryItem event </h3>
+
+Event Name: ```add-item```
+Data: ```Category``` object that contains all necessary info about category where the action was triggered.
+Usage: e.g how to listen for this event:
+	```javascript
+	 $millerCol.on("add-item", ".miller-col-container", function (event, data) {
+		//your logic here.
+	 }
+
+	```
+
+<h3> Edit CategoryItem event </h3>
+
+Event Name: ```edit-item```
+Data: ```CategoryItem``` object that contains all necessary info about the tobe edited category item.
+Usage: e.g how to listen for this event:
+	```javascript
+	 $millerCol.on("edit-item", ".miller-col-list-item", function (event, data) {
+		//your logic here.
+	 }
+
+	```
+
+<h3> Delete CategoryItem event </h3>
+
+Event Name: ```delete-item```
+Data: ```CategoryItem``` object that contains all necessary info about the tobe deleted category item.
+Usage: e.g how to listen for this event:
+	```javascript
+	 $millerCol.on("delete-item", ".miller-col-list-item", function (event, data) {
+		//your logic here.
+	 }
+
+	```
