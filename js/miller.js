@@ -207,6 +207,9 @@ function guid() {
 
                 var readOnly = $(this).data("is-read-only");
 
+                if (readOnly && args[1].items.length == 0 )
+                    return;
+
                 var newMillerCol = $("<div/>");
 
                 newMillerCol.addClass("miller-col-container");
