@@ -6,6 +6,8 @@ function findCategoryByParentId(categoriesCollection, parentId) {
         parentId: parentId
     });
 
+    if(null == category) return null;
+    
     //delete inactive functions pulled from db
     for (k in category) {
         if (typeof category[k] == 'undefined') delete category[i];
@@ -107,6 +109,9 @@ function createChildrenCategoryItems(categoryItemCollection, categoriesCollectio
             console.log("item selected.. data: " + data.itemId);
 
             var category = findCategoryByParentId(categories, data.categoryId);
+           
+            if(null == category) return;
+            
             var itemCategories2 = itemCategories.find({
                 $and: [
                     {
