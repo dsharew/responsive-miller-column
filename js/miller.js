@@ -213,9 +213,6 @@ function guid() {
 
                 var readOnly = $(this).data("is-read-only");
 
-                if (readOnly && args[1].items.length == 0 )
-                    return;
-
                 var newMillerCol = $("<div/>");
 
                 newMillerCol.addClass("miller-col-container");
@@ -617,7 +614,7 @@ function guid() {
 
             while (!isOverFlowing.call(this) && hasRightHiddenCol.call(this)) {
 
-                showView.call(getLastVisibleCol.call(this).next());
+                hideView.call(getLastVisibleCol.call(this).next());
 
                 if (!hasRightHiddenCol.call(this)) {
                     hideNextNavCol.call(this);
