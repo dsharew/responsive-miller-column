@@ -1,13 +1,10 @@
-//max num cols
-var CONSTANT_MAX_NUMBER_CATEGORIES = 10;
+var CONSTANT_MAX_NUMBER_CATEGORIES = 10
 
 function findCategoryByParentId(categoriesCollection, parentId) {
 
     var category = categoriesCollection.findOne({
         parentId: parentId
     });
-
-    if (null == category) return null;
 
     //delete inactive functions pulled from db
     for (k in category) {
@@ -58,7 +55,7 @@ function createChildrenCategoryItems(categoryItemCollection, categoriesCollectio
 
         var numChildren2 = parseInt(Math.random() * 6);
 
-        if (category.getIsLowestLevel()) numChildren2 = 0;
+	if (category.getIsLowestLevel()) numChildren2 = 0;
 
         categoryItem.setItemName(category.getCategoryName() + " item " + i);
         categoryItem.setHasChildren(numChildren2 != 0);
@@ -71,8 +68,8 @@ function createChildrenCategoryItems(categoryItemCollection, categoriesCollectio
 
         var childCategory = findCategoryByParentId(categoriesCollection, category.getCategoryId());
 
-        if (!category.getIsLowestLevel())
-            createChildrenCategoryItems(categoryItemCollection, categoriesCollection, childCategory, categoryItem, numChildren2);
+	if (!category.getIsLowestLevel())
+	        createChildrenCategoryItems(categoryItemCollection, categoriesCollection, childCategory, categoryItem, numChildren2);
 
     }
 
@@ -110,9 +107,6 @@ function createChildrenCategoryItems(categoryItemCollection, categoriesCollectio
             console.log("item selected.. data: " + data.itemId);
 
             var category = findCategoryByParentId(categories, data.categoryId);
-
-            if (null == category) return;
-
             var itemCategories2 = itemCategories.find({
                 $and: [
                     {

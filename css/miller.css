@@ -35,6 +35,12 @@ html {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -163,7 +169,6 @@ body {
     text-align: center;
     padding: 10px;
     font-weight: 900;
-    min-height: 48px;
 }
 
 .miller-col-actions {
@@ -196,7 +201,7 @@ body {
     position: relative;
 }
 
-.miller-col-list-item> * {
+.miller-col-list-item > * {
     display: table-cell;
     vertical-align: middle;
 }
@@ -268,8 +273,13 @@ body {
 }
 
 .miller-col-title {
-    padding: 15px;
+    padding: 15px 15px;
     box-shadow: rgba(0, 0, 0, 0.05) 1px 1px 10px 0px;
+    position: absolute;
+    z-index: 10;
+    height: 48px;
+    background: #fff;
+    width: 100%;
 }
 
 .miller-col-list-item .list-item-text {
@@ -309,4 +319,12 @@ body {
 
 .miller-col-nav .material-icons {
     font-size: 2.85em;
+}
+
+.miller-col-body {
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    margin-top: 58px;
+    padding-top: 0;
 }
