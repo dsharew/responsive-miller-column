@@ -163,6 +163,7 @@ body {
     text-align: center;
     padding: 10px;
     font-weight: 900;
+    min-height: 48px;
 }
 
 .miller-col-actions {
@@ -195,7 +196,7 @@ body {
     position: relative;
 }
 
-.miller-col-list-item > * {
+.miller-col-list-item> * {
     display: table-cell;
     vertical-align: middle;
 }
