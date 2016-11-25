@@ -601,7 +601,7 @@ function guid() {
 
             while (!isOverFlowing.call(this) && hasRightHiddenCol.call(this)) {
 
-                hideView.call(getLastVisibleCol.call(this).next());
+                showView.call(getLastVisibleCol.call(this).next());
 
                 if (!hasRightHiddenCol.call(this)) {
                     hideNextNavCol.call(this);
