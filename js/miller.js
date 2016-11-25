@@ -137,6 +137,9 @@ function guid() {
             isReadOnly: true
         }
 
+
+        var isDebugEnabled = false;
+
         $.extend(settings, defaults);
 
         var args = Array.prototype.slice.call(arguments);
@@ -161,7 +164,9 @@ function guid() {
         if ("addCol" == args[0]) {
 
             if (!isInitialized.call(this)) {
-                console.log("element is is not initialized as a miller column. You need to call jQuery('#id).millerColumn() first.");
+                if (isDebugEnabled) {
+                    console.log("element is is not initialized as a miller column. You need to call jQuery('#id).millerColumn() first.");
+                }
                 return;
             }
 
@@ -266,7 +271,9 @@ function guid() {
             var colContainer = getMillerColContainers.call(this).filter("[data-category-id='" + itemData.categoryId + "']");
 
             if (null == colContainer) {
-                console.log("Cant find category with id: " + itemData.categoryId);
+                if (isDebugEnabled) {
+                    console.log("Cant find category with id: " + itemData.categoryId);
+                }
                 return;
             }
 
@@ -339,7 +346,9 @@ function guid() {
 
             var totalWidth = 0;
 
-            console.log("About to calculate total width ...........................");
+            if (isDebugEnabled) {
+                console.log("About to calculate total width ...........................");
+            }
 
             getMillerColContainers.call(this).each(function () {
 
@@ -348,14 +357,18 @@ function guid() {
 
                 totalWidth += $(this).outerWidth();
 
-                console.log("added width: " + $(this).outerWidth())
+                if (isDebugEnabled) {
+                    console.log("added width: " + $(this).outerWidth())
+                }
 
             });
 
             //include loading col width if it is showing.
             totalWidth = totalWidth + (!isViewHidden.call(getLoadingCol.call(this)) ? getLoadingCol.call(this).outerWidth() : 0);
 
-            console.log("totalColsWidth: " + totalWidth + " body width:" + $(this).outerWidth());
+            if (isDebugEnabled) {
+                console.log("totalColsWidth: " + totalWidth + " body width:" + $(this).outerWidth());
+            }
 
             return totalWidth;
         }
@@ -747,7 +760,9 @@ function guid() {
                 if (!$(event.target).is(getColContainerSelector()))
                     return;
 
-                console.log("Dom inserted..");
+                if (isDebugEnabled) {
+                    console.log("Dom inserted..");
+                }
 
                 hideLoadingCol.call(millerColumn);
 
@@ -761,8 +776,9 @@ function guid() {
                 //resize only if col is removed.
                 if (!$(event.target).is(getColContainerSelector()))
                     return;
-
-                console.log("Dom removed..");
+                if (isDebugEnabled) {
+                    console.log("Dom removed..");
+                }
 
                 resizeMillerColumn.call(millerColumn, SHRINK_DIRECTION_LEFT, SCALE_TYPE_SCALE_UP);
 
@@ -803,7 +819,9 @@ function guid() {
 
                 $(this).trigger("item-selected", data);
 
-                console.log("fired item-selected event: " + JSON.stringify(data))
+                if (isDebugEnabled) {
+                    console.log("fired item-selected event: " + JSON.stringify(data))
+                }
 
             });
 
@@ -824,7 +842,9 @@ function guid() {
 
                 $(currentColContainer).trigger("add-item", data);
 
-                console.log("fired add item event: " + JSON.stringify(data));
+                if (isDebugEnabled) {
+                    console.log("fired add item event: " + JSON.stringify(data));
+                }
 
             });
 
@@ -847,7 +867,9 @@ function guid() {
 
                 $(currentItemContainer).trigger("edit-item", data);
 
-                console.log("fired edit item event: " + JSON.stringify(data));
+                if (isDebugEnabled) {
+                    console.log("fired edit item event: " + JSON.stringify(data));
+                }
 
                 event.stopPropagation();
 
@@ -874,7 +896,9 @@ function guid() {
 
                 $(currentItemContainer).trigger("delete-item", data);
 
-                console.log("fired delete item event: " + JSON.stringify(data));
+                if (isDebugEnabled) {
+                    console.log("fired delete item event: " + JSON.stringify(data));
+                }
 
                 event.stopPropagation();
 
@@ -885,12 +909,16 @@ function guid() {
 
                 waitForFinalEvent(function () {
 
-                    console.log("window resized..");
+                    if (isDebugEnabled) {
+                        console.log("window resized..");
+                    }
 
                     if ($(window).outerWidth() == windowWidth)
                         return;
 
-                    console.log("About to resize: old width:" + windowWidth + " new one: " + $(window).outerWidth());
+                    if (isDebugEnabled) {
+                        console.log("About to resize: old width:" + windowWidth + " new one: " + $(window).outerWidth());
+                    }
 
                     //disable nav cols
                     hideNavCols.call(millerColumn);
