@@ -41,8 +41,8 @@ function Category() {
     _this.getIsLowestLevel = function () {
         return _this.isLowestLevel
     }
-
-    _this.setItems = function (categoryItems) {
+    
+     _this.setItems = function (categoryItems) {
         _this.items = categoryItems;
     }
     _this.getItems = function () {
@@ -132,6 +132,7 @@ function guid() {
 (function ($) {
 
     $.fn.millerColumn = function (settings) {
+
         var defaults = {
             isReadOnly: true
         }

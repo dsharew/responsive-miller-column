@@ -1,9 +1,10 @@
 /* fallback */
+
 @font-face {
     font-family: 'Material Icons';
     font-style: normal;
     font-weight: 400;
-    src: url(fonts/material-icons.woff2);
+    src: url(fonts/material-icons.woff2) format('woff2'), url(fonts/MaterialIcons-Regular.woff) format('woff'), url(fonts/MaterialIcons-Regular.ttf) format('truetype'), url(fonts/MaterialIcons-Regular.svg), url(fonts/MaterialIcons-Regular.eot);
 }
 
 .material-icons {
@@ -20,5 +21,6 @@
     direction: ltr;
     -webkit-font-feature-settings: 'liga';
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
 }
-
