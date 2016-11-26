@@ -425,6 +425,8 @@ function guid() {
 
             }
 
+            $(this).addClass("category-miller-cols-container");
+            
             $(this).attr("millerized", "");
             $(this).attr("data-is-read-only", settings.isReadOnly);
         }

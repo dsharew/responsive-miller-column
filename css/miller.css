@@ -52,8 +52,8 @@ body {
     font-weight: 300;
 }
 
-#category-miller-cols-container {
-    max-width: 90%;
+.category-miller-cols-container {
+    max-width: 75%;
     margin: auto;
     position: relative;
     z-index: 1;
@@ -76,7 +76,8 @@ body {
     display: -webkit-box;
     overflow: hidden;
     /*overflow-x: auto;*/
-    height: 450px;
+    height: auto;
+    min-height: 300px;
     /*            width: 90%;*/
     position: relative;
     z-index: 1;
