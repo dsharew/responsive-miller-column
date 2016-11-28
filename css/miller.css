@@ -184,6 +184,10 @@ body {
 .miller-col-loading-container {
     min-width: 210px;
     max-width: 400px;
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
 }
 
 .miller-col-body {
@@ -200,9 +204,10 @@ body {
     padding-right: 10px;
     color: rgba(0, 0, 0, 0.6);
     position: relative;
+    
 }
 
-.miller-col-list-item > * {
+.miller-col-list-item> * {
     display: table-cell;
     vertical-align: middle;
 }
