@@ -41,8 +41,8 @@ function Category() {
     _this.getIsLowestLevel = function () {
         return _this.isLowestLevel
     }
-    
-     _this.setItems = function (categoryItems) {
+
+    _this.setItems = function (categoryItems) {
         _this.items = categoryItems;
     }
     _this.getItems = function () {
@@ -134,15 +134,16 @@ function guid() {
     $.fn.millerColumn = function (settings) {
 
         var defaults = {
-            isReadOnly: true
+            isReadOnly: true,
+            height: '400px'
         }
-
 
         var isDebugEnabled = false;
 
-        $.extend(settings, defaults);
-
         var args = Array.prototype.slice.call(arguments);
+        
+        if (typeof args[0] != "string")
+            $.extend(settings, defaults);
 
         //using var instead of const to support IE
         var SCALE_TYPE_SCALE_UP = "scaleup";
@@ -213,7 +214,7 @@ function guid() {
 
                 var readOnly = $(this).data("is-read-only");
 
-                if (readOnly && args[1].items.length == 0 )
+                if (readOnly && args[1].items.length == 0)
                     return;
 
                 var newMillerCol = $("<div/>");
@@ -427,6 +428,10 @@ function guid() {
 
             $(this).addClass("category-miller-cols-container");
             
+            $(this).css({
+                height: settings.height
+            })
+
             $(this).attr("millerized", "");
             $(this).attr("data-is-read-only", settings.isReadOnly);
         }
