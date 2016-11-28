@@ -138,7 +138,7 @@ function guid() {
             height: '400px'
         }
 
-        var isDebugEnabled = false;
+        var isDebugEnabled = true;
 
         var args = Array.prototype.slice.call(arguments);
 
@@ -864,7 +864,7 @@ function guid() {
                 var currentItemContainer = $(this).closest(getColListItemSelector());
 
                 //Firing edit-item event.
-                var data = getCategoryItem.call(this);
+                var data = getCategoryItem.call(currentItemContainer);
 
                 $(currentItemContainer).trigger("edit-item", data);
 
@@ -883,7 +883,7 @@ function guid() {
                 var currentItemContainer = $(this).closest(getColListItemSelector());
 
                 //Firing delete-item event.
-                var data = getCategoryItem.call(this);
+                var data = getCategoryItem.call(currentItemContainer);
 
                 $(currentItemContainer).trigger("delete-item", data);
 
