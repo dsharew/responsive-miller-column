@@ -141,7 +141,7 @@ function guid() {
         var isDebugEnabled = false;
 
         var args = Array.prototype.slice.call(arguments);
-        
+
         if (typeof args[0] != "string")
             settings = $.extend(settings, options);
 
@@ -223,6 +223,7 @@ function guid() {
                 newMillerCol.attr("data-category-id", args[1].categoryId);
                 newMillerCol.attr("data-category-name", args[1].categoryName);
                 newMillerCol.attr("data-is-lowest-level", args[1].isLowestLevel);
+                newMillerCol.attr("data-parent-id", args[1].parentId);
 
                 var millerColTitle = $("<div/>"),
                     millerColTitleText = $("<div>").addClass("miller-col-title-text").append($("<span/>").text(args[1].categoryName));
@@ -322,9 +323,11 @@ function guid() {
         function buildColListItem(item, readOnly) {
 
             var millerColListItem = $("<div/>").addClass("miller-col-list-item");
+            
             millerColListItem.attr("data-has-children", item.hasChildren);
             millerColListItem.attr("data-item-id", item.itemId);
             millerColListItem.attr("data-parent-id", item.parentId);
+            millerColListItem.attr("data-category-id", item.categoryId);
             millerColListItem.attr("data-is-deletable", item.isDeletable);
 
             millerColListItem.append($("<span/>").text(item.itemName).addClass("list-item-text"));
@@ -427,7 +430,7 @@ function guid() {
             }
 
             $(this).addClass("category-miller-cols-container");
-            
+
             $(this).css({
                 height: settings.height
             })
@@ -582,6 +585,34 @@ function guid() {
         function removeTrailingColContainers() {
             $(this).nextAll(":not(.col-loading)").remove();
         }
+
+        function getCategoryItem() {
+
+            var categoryItem = new CategoryItem();
+
+            categoryItem.setCategoryId($(this).data("category-id"));
+            categoryItem.setItemId($(this).data("item-id"));
+            categoryItem.setHasChildren($(this).data("has-children"));
+            categoryItem.setIsDeletable($(this).data("is-deletable"));
+            categoryItem.setParentId($(this).data("parent-id"));
+
+            return categoryItem;
+
+        }
+
+        function getCategory() {
+
+            var category = new Category();
+
+            category.setCategoryId($(this).data("category-id"));
+            category.setCategoryName($(this).data("category-name"));
+            category.setIsLowestLevel($(this).data("is-lowest-level"));
+            category.setParentId($(this).data("parent-id"));
+            
+            return category;
+
+        }
+
 
         function scaleUpLeft() {
 
@@ -816,41 +847,12 @@ function guid() {
                 selectItem.call(this);
 
                 //Firing item-selected event.
-                var data = {};
-
-                data.categoryId = $(currentColContainer).data("category-id");
-                data.itemId = $(this).data("item-id");
-                data.hasChildren = $(this).data("has-children");
-                data.isDeletable = $(this).data("is-deletable");
-                data.isLowestLevel = $(currentColContainer).data("is-lowest-level");
+                var data = getCategoryItem.call(this);
 
                 $(this).trigger("item-selected", data);
 
                 if (isDebugEnabled) {
                     console.log("fired item-selected event: " + JSON.stringify(data))
-                }
-
-            });
-
-            getMillerColsBody.call(millerColumn).on("click", ".miller-col-actions .action-add", function () {
-
-                var currentColContainer = $(this).closest(getColContainerSelector());
-                var parentColContainer = currentColContainer.prev();
-
-                //Firing add-item event.
-                var data = {};
-
-                data.categoryId = $(currentColContainer).data("category-id");
-                data.categorName = $(currentColContainer).data("category-name");
-                data.isLowestLevel = $(currentColContainer).data("is-lowest-level");
-
-                if (null != parentColContainer)
-                    data.parentId = parentColContainer.find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
-
-                $(currentColContainer).trigger("add-item", data);
-
-                if (isDebugEnabled) {
-                    console.log("fired add item event: " + JSON.stringify(data));
                 }
 
             });
@@ -862,15 +864,7 @@ function guid() {
                 var currentItemContainer = $(this).closest(getColListItemSelector());
 
                 //Firing edit-item event.
-                var data = {};
-
-                data.categoryId = $(currentColContainer).data("category-id");
-                data.categorName = $(currentColContainer).data("category-name");
-                data.itemId = $(currentItemContainer).data("item-id");
-                data.itemName = $(currentItemContainer).find(".list-item-text").text();
-
-                if (null != parentColContainer)
-                    data.parentId = parentColContainer.find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
+                var data = getCategoryItem.call(this);
 
                 $(currentItemContainer).trigger("edit-item", data);
 
@@ -882,7 +876,6 @@ function guid() {
 
             });
 
-
             getMillerColsBody.call(millerColumn).on("click", ".list-item-actions .delete", function (event) {
 
                 var currentColContainer = $(this).closest(getColContainerSelector());
@@ -890,16 +883,7 @@ function guid() {
                 var currentItemContainer = $(this).closest(getColListItemSelector());
 
                 //Firing delete-item event.
-                var data = {};
-
-                data.categoryId = $(currentColContainer).data("category-id");
-                data.categorName = $(currentColContainer).data("category-name");
-                data.itemId = $(currentItemContainer).data("item-id");
-                data.hasChildren = $(currentItemContainer).data("has-children");
-                data.isDeletable = $(currentItemContainer).data("is-deletable");
-
-                if (null != parentColContainer)
-                    data.parentId = parentColContainer.find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
+                var data = getCategoryItem.call(this);
 
                 $(currentItemContainer).trigger("delete-item", data);
 
@@ -908,6 +892,22 @@ function guid() {
                 }
 
                 event.stopPropagation();
+
+            });
+            
+            getMillerColsBody.call(millerColumn).on("click", ".miller-col-actions .action-add", function () {
+
+                var currentColContainer = $(this).closest(getColContainerSelector());
+                var parentColContainer = currentColContainer.prev();
+
+                //Firing add-item event.
+                var data = getCategory.call(currentColContainer);
+
+                $(currentColContainer).trigger("add-item", data);
+
+                if (isDebugEnabled) {
+                    console.log("fired add item event: " + JSON.stringify(data));
+                }
 
             });
 
