@@ -131,9 +131,9 @@ function guid() {
 
 (function ($) {
 
-    $.fn.millerColumn = function (settings) {
+    $.fn.millerColumn = function (options) {
 
-        var defaults = {
+        var settings = {
             isReadOnly: true,
             height: '400px'
         }
@@ -143,7 +143,7 @@ function guid() {
         var args = Array.prototype.slice.call(arguments);
         
         if (typeof args[0] != "string")
-            $.extend(settings, defaults);
+            settings = $.extend(settings, options);
 
         //using var instead of const to support IE
         var SCALE_TYPE_SCALE_UP = "scaleup";
