@@ -75,8 +75,8 @@ body {
     display: -ms-flexbox;
     display: -webkit-box;
     overflow: hidden;
+    height: 100%;
     /*overflow-x: auto;*/
-    height: auto;
     min-height: 300px;
     /*            width: 90%;*/
     position: relative;
