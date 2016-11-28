@@ -11,19 +11,19 @@
 
 @font-face {
     font-family: "Roboto";
-    src: url('../fonts/Roboto-Regular.ttf');
+    src: url('../fonts/roboto/Roboto-Regular.ttf');
     font-weight: normal;
 }
 
 @font-face {
     font-family: "Roboto-bold";
-    src: url('../fonts/Roboto-Bold.ttf');
+    src: url('../fonts/roboto/Roboto-Bold.ttf');
     font-weight: normal;
 }
 
 @font-face {
     font-family: "Roboto-light";
-    src: url('../fonts/Roboto-Light.ttf');
+    src: url('../fonts/roboto/Roboto-Light.ttf');
     font-weight: normal;
 }
 
