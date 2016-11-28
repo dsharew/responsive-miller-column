@@ -329,6 +329,7 @@ function guid() {
             millerColListItem.attr("data-parent-id", item.parentId);
             millerColListItem.attr("data-category-id", item.categoryId);
             millerColListItem.attr("data-is-deletable", item.isDeletable);
+            millerColListItem.attr("data-item-name", item.itemName);
 
             millerColListItem.append($("<span/>").text(item.itemName).addClass("list-item-text"));
 
@@ -592,6 +593,7 @@ function guid() {
 
             categoryItem.setCategoryId($(this).data("category-id"));
             categoryItem.setItemId($(this).data("item-id"));
+            categoryItem.setItemName($(this).data("item-name"));
             categoryItem.setHasChildren($(this).data("has-children"));
             categoryItem.setIsDeletable($(this).data("is-deletable"));
             categoryItem.setParentId($(this).data("parent-id"));
