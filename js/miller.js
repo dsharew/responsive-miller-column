@@ -416,7 +416,7 @@ function guid() {
                     .append($("<div/>")
                         .addClass("miller-col-body")
                         .append($("<div/>")
-                            .addClass("miller-col-list-item loading-icon-container")));
+                            .addClass("miller-col-list-item loading-icon-container spinner")));
 
                 millerColsBody.append(millerColLoading);
 
