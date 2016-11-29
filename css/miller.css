@@ -1,32 +1,3 @@
-::-webkit-scrollbar {
-    background: rgba(0, 0, 0, 0);
-    width: 6px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.3);
-    height: 30px;
-    border-radius: 2px;
-}
-
-@font-face {
-    font-family: "Roboto";
-    src: url('../fonts/roboto/Roboto-Regular.ttf');
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: "Roboto-bold";
-    src: url('../fonts/roboto/Roboto-Bold.ttf');
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: "Roboto-light";
-    src: url('../fonts/roboto/Roboto-Light.ttf');
-    font-weight: normal;
-}
-
 html {
     font-size: 16px;
 }
@@ -103,8 +74,23 @@ body {
     overflow-wrap: break-word;
 }
 
+.miller-col-container {
+    border-left: 0;
+}
+
+.miller-col-container:first-child {
+    border: 1px solid #DBDBDB;
+}
+
+.miller-col-body {
+    padding: 10px 0;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll;
+    overflow-y: auto;
+}
+
 .miller-col-container .miller-col-body .miller-col-list-item.selected {
-    background: #DBDBDB;
+    background: #eaeaea;
     color: rgba(0, 0, 0, 0.9);
 }
 
@@ -131,7 +117,7 @@ body {
 }
 
 .miller-col-nav .material-icons {
-    font-size: 3em;
+    font-size: 2.85em;
     font-weight: 300;
     float: right;
 }
@@ -167,8 +153,10 @@ body {
 
 .miller-col-title {
     border-bottom: 1px solid #F5F5F5;
+    box-shadow: rgba(0, 0, 0, 0.05) 1px 1px 10px 0px;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
+    background: #fff;
     font-weight: 900;
 }
 
@@ -190,21 +178,13 @@ body {
     transition: all 1s ease-in-out;
 }
 
-.miller-col-body {
-    overflow-y: auto;
-    padding: 10px;
-}
-
 .miller-col-list-item {
-    padding: 10px 5px;
+    position: relative;
+    padding: 10px 20px;
     font-weight: 300;
     display: table;
     width: 100%;
-    margin-left: 10px;
-    padding-right: 10px;
-    color: rgba(0, 0, 0, 0.6);
-    position: relative;
-    
+    color: rgba(0, 0, 0, 0.75);
 }
 
 .miller-col-list-item> * {
@@ -214,6 +194,10 @@ body {
 
 .miller-col-list-item .list-item-text {
     float: left;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    word-break: break-word;
+    text-align: left;
 }
 
 .miller-col-list-item .has-children {
@@ -230,13 +214,8 @@ body {
     display: inline;
 }
 
-.list-item-actions .material-icons {
-    padding-left: 20px;
-    opacity: 0.6;
-}
-
 .list-item-actions .material-icons:hover {
-    opacity: 1
+    opacity: 1;
 }
 
 .miller-col-list-item:hover {
@@ -244,89 +223,11 @@ body {
     cursor: pointer;
 }
 
-.text-node {
-    white-space: nowrap;
-}
-
-
-/*
-
-    Style modifications
-    
-*/
-
-
-.miller-col-container {
-    border-left: 0;
-}
-
-.miller-col-container:first-child {
-    border: 1px solid #DBDBDB;
-}
-
-.miller-col-body {
-    padding: 10px 0;
-}
-
-.miller-col-list-item {
-    margin-left: 0;
-    padding-left: 25px;
-    color: rgba(0, 0, 0, 0.75);
-}
-
-.miller-col-title {
-    padding: 15px 15px;
-    box-shadow: rgba(0, 0, 0, 0.05) 1px 1px 10px 0px;
-    position: absolute;
-    z-index: 10;
-    height: 48px;
-    background: #fff;
-    width: 100%;
-}
-
-.miller-col-list-item .list-item-text {
-    font-family: "Roboto-light", sans-serif;
-    padding-top: 4px;
-    padding-bottom: 4px;
-}
-
-.miller-col-title-text {
-    font-family: "Roboto-bold", sans-serif;
-    text-transform: uppercase;
-    font-size: 90%;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-.miller-col-list-item .has-children {
-    padding-top: 2px;
-}
-
-.material-icons {
-    color: #bbb;
-    -webkit-transition: 300ms;
-    -moz-transition: 300ms;
-    -ms-transition: 300ms;
-    transition: 300ms;
-}
-
 .miller-col-list-item:hover .material-icons,
 .miller-col-list-item.selected .material-icons {
     color: #777;
 }
 
-.miller-col-container .miller-col-body .miller-col-list-item.selected {
-    background: #eaeaea;
-}
-
-.miller-col-nav .material-icons {
-    font-size: 2.85em;
-}
-
-.miller-col-body {
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
-    overflow-y: auto;
-    margin-top: 58px;
-    padding-top: 0;
+.text-node {
+    white-space: nowrap;
 }
