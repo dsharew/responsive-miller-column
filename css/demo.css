@@ -1,0 +1,89 @@
+::-webkit-scrollbar {
+    background: rgba(0, 0, 0, 0);
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    height: 30px;
+    border-radius: 2px;
+}
+
+.category-miller-cols-container {
+    margin-top: 10px;
+    box-shadow: rgba(0, 0, 0, 0.10) 0px 15px 40px 0px;
+}
+
+.miller-col-container {
+    border-left: 0;
+}
+
+.miller-col-container:first-child {
+    border: 1px solid #DBDBDB;
+}
+
+.miller-col-body {
+    padding: 10px 0;
+}
+
+.miller-col-list-item {
+    margin-left: 0;
+    padding-left: 25px;
+    color: rgba(0, 0, 0, 0.75);
+}
+
+.miller-col-title {
+    padding: 15px 15px;
+    box-shadow: rgba(0, 0, 0, 0.05) 1px 1px 10px 0px;
+    position: absolute;
+    z-index: 10;
+    height: 48px;
+    background: #fff;
+    width: 100%;
+}
+
+.miller-col-list-item .list-item-text {
+    font-family: "Roboto-light", sans-serif;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.miller-col-title-text {
+    font-family: "Roboto-bold", sans-serif;
+    text-transform: uppercase;
+    font-size: 90%;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.miller-col-list-item .has-children {
+    padding-top: 2px;
+}
+
+.material-icons {
+    color: #bbb;
+    -webkit-transition: 300ms;
+    -moz-transition: 300ms;
+    -ms-transition: 300ms;
+    transition: 300ms;
+}
+
+.miller-col-list-item:hover .material-icons,
+.miller-col-list-item.selected .material-icons {
+    color: #777;
+}
+
+.miller-col-container .miller-col-body .miller-col-list-item.selected {
+    background: #eaeaea;
+}
+
+.miller-col-nav .material-icons {
+    font-size: 2.85em;
+}
+
+.miller-col-body {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    margin-top: 58px;
+    padding-top: 0;
+}
