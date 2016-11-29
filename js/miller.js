@@ -829,8 +829,6 @@ function guid() {
              */
             getMillerColsBody.call(millerColumn).on("click", getColListItemSelector(), function () {
 
-                if ($(this).is(SELECTOR_IS_SELECTED)) return;
-
                 var currentColContainer = $(this).closest(getColContainerSelector());
 
                 removeTrailingColContainers.call(currentColContainer);
