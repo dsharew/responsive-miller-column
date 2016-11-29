@@ -4,48 +4,48 @@ function Category() {
 
     _this.categoryId = guid();
 
-    _this.setCategoryId = function (categoryId) {
+    _this.setCategoryId = function(categoryId) {
 
         _this.categoryId = categoryId;
 
     }
 
-    _this.getCategoryId = function () {
+    _this.getCategoryId = function() {
         return _this.categoryId;
     }
 
 
-    _this.setCategoryName = function (categoryName) {
+    _this.setCategoryName = function(categoryName) {
 
         _this.categoryName = categoryName;
 
     }
-    _this.getCategoryName = function () {
+    _this.getCategoryName = function() {
         return _this.categoryName;
     }
 
 
-    _this.setParentId = function (parentId) {
+    _this.setParentId = function(parentId) {
 
         _this.parentId = parentId;
 
     }
-    _this.getParentId = function () {
+    _this.getParentId = function() {
         return _this.parentId;
     }
 
 
-    _this.setIsLowestLevel = function (isLowestLevel) {
+    _this.setIsLowestLevel = function(isLowestLevel) {
         _this.isLowestLevel = isLowestLevel;
     }
-    _this.getIsLowestLevel = function () {
+    _this.getIsLowestLevel = function() {
         return _this.isLowestLevel
     }
 
-    _this.setItems = function (categoryItems) {
+    _this.setItems = function(categoryItems) {
         _this.items = categoryItems;
     }
-    _this.getItems = function () {
+    _this.getItems = function() {
         return _this.items
     }
 
@@ -58,60 +58,60 @@ function CategoryItem() {
 
     _this.itemId = guid();
 
-    _this.setItemId = function (itemId) {
+    _this.setItemId = function(itemId) {
 
         _this.itemId = itemId;
 
     }
 
-    _this.getItemId = function () {
+    _this.getItemId = function() {
         return _this.itemId;
     }
 
 
-    _this.setItemName = function (itemName) {
+    _this.setItemName = function(itemName) {
 
         _this.itemName = itemName;
 
     }
-    _this.getItemName = function () {
+    _this.getItemName = function() {
         return _this.itemName;
     }
 
 
-    _this.setParentId = function (parentId) {
+    _this.setParentId = function(parentId) {
 
         _this.parentId = parentId;
 
     }
-    _this.getParentId = function () {
+    _this.getParentId = function() {
         return _this.parentId;
     }
 
 
-    _this.setCategoryId = function (categoryId) {
+    _this.setCategoryId = function(categoryId) {
 
         _this.categoryId = categoryId;
 
     }
-    _this.getCategoryId = function () {
+    _this.getCategoryId = function() {
         return _this.categoryId;
     }
 
 
-    _this.setHasChildren = function (hasChildren) {
+    _this.setHasChildren = function(hasChildren) {
         _this.hasChildren = hasChildren;
     }
-    _this.getHasChildren = function () {
+    _this.getHasChildren = function() {
         return _this.hasChildren
     }
 
 
     _this.isDeleteable = true;
-    _this.setIsDeletable = function (isDeleteable) {
+    _this.setIsDeletable = function(isDeleteable) {
         _this.isDeleteable = isDeleteable;
     }
-    _this.getIsDeleteable = function () {
+    _this.getIsDeleteable = function() {
         return _this.isDeleteable
     }
 
@@ -129,9 +129,9 @@ function guid() {
 }
 
 
-(function ($) {
+(function($) {
 
-    $.fn.millerColumn = function (options) {
+    $.fn.millerColumn = function(options) {
 
         var settings = {
             isReadOnly: true,
@@ -323,7 +323,7 @@ function guid() {
         function buildColListItem(item, readOnly) {
 
             var millerColListItem = $("<div/>").addClass("miller-col-list-item");
-            
+
             millerColListItem.attr("data-has-children", item.hasChildren);
             millerColListItem.attr("data-item-id", item.itemId);
             millerColListItem.attr("data-parent-id", item.parentId);
@@ -355,7 +355,7 @@ function guid() {
                 console.log("About to calculate total width ...........................");
             }
 
-            getMillerColContainers.call(this).each(function () {
+            getMillerColContainers.call(this).each(function() {
 
                 if (isViewHidden.call(this))
                     return;
@@ -430,7 +430,7 @@ function guid() {
 
             }
 
-            $(this).addClass("category-miller-cols-container");
+            $(this).addClass("miller-cols-container-wrapper");
 
             $(this).css({
                 height: settings.height
@@ -610,7 +610,7 @@ function guid() {
             category.setCategoryName($(this).data("category-name"));
             category.setIsLowestLevel($(this).data("is-lowest-level"));
             category.setParentId($(this).data("parent-id"));
-            
+
             return category;
 
         }
@@ -741,9 +741,9 @@ function guid() {
 
 
 
-        var waitForFinalEvent = (function () {
+        var waitForFinalEvent = (function() {
             var timers = {};
-            return function (callback, ms, uniqueId) {
+            return function(callback, ms, uniqueId) {
                 if (!uniqueId) {
                     uniqueId = "Don't call this twice without a uniqueId";
                 }
@@ -755,7 +755,7 @@ function guid() {
         })();
 
 
-        return this.each(function () {
+        return this.each(function() {
 
             var millerColumn = this;
 
@@ -770,7 +770,7 @@ function guid() {
 
             }
 
-            getPrevNav.call(millerColumn).on("click", function () {
+            getPrevNav.call(millerColumn).on("click", function() {
 
                 showView.call(getFirstVisibleCol.call(millerColumn).prev());
 
@@ -782,7 +782,7 @@ function guid() {
 
             });
 
-            getNextNav.call(millerColumn).on("click", function () {
+            getNextNav.call(millerColumn).on("click", function() {
 
                 showView.call(getLastVisibleCol.call(millerColumn).next());
 
@@ -794,7 +794,7 @@ function guid() {
             });
 
 
-            getMillerColsBody.call(millerColumn).on("DOMNodeInserted", function (event) {
+            getMillerColsBody.call(millerColumn).on("DOMNodeInserted", function(event) {
 
                 //resize only if col is added.
                 if (!$(event.target).is(getColContainerSelector()))
@@ -811,7 +811,7 @@ function guid() {
             });
 
 
-            getMillerColsBody.call(millerColumn).on("DOMNodeRemoved", function (event) {
+            getMillerColsBody.call(millerColumn).on("DOMNodeRemoved", function(event) {
 
                 //resize only if col is removed.
                 if (!$(event.target).is(getColContainerSelector()))
@@ -827,7 +827,7 @@ function guid() {
             /**
              * Fires item-selected event when an item is selected along with the necessary data.
              */
-            getMillerColsBody.call(millerColumn).on("click", getColListItemSelector(), function () {
+            getMillerColsBody.call(millerColumn).on("click", getColListItemSelector(), function() {
 
                 var currentColContainer = $(this).closest(getColContainerSelector());
 
@@ -857,7 +857,7 @@ function guid() {
 
             });
 
-            getMillerColsBody.call(millerColumn).on("click", ".list-item-actions .edit", function (event) {
+            getMillerColsBody.call(millerColumn).on("click", ".list-item-actions .edit", function(event) {
 
                 var currentColContainer = $(this).closest(getColContainerSelector());
                 var parentColContainer = currentColContainer.prev();
@@ -876,7 +876,7 @@ function guid() {
 
             });
 
-            getMillerColsBody.call(millerColumn).on("click", ".list-item-actions .delete", function (event) {
+            getMillerColsBody.call(millerColumn).on("click", ".list-item-actions .delete", function(event) {
 
                 var currentColContainer = $(this).closest(getColContainerSelector());
                 var parentColContainer = currentColContainer.prev();
@@ -894,8 +894,8 @@ function guid() {
                 event.stopPropagation();
 
             });
-            
-            getMillerColsBody.call(millerColumn).on("click", ".miller-col-actions .action-add", function () {
+
+            getMillerColsBody.call(millerColumn).on("click", ".miller-col-actions .action-add", function() {
 
                 var currentColContainer = $(this).closest(getColContainerSelector());
                 var parentColContainer = currentColContainer.prev();
@@ -912,9 +912,9 @@ function guid() {
             });
 
 
-            $(window).on("resize.miller_column", function (event) {
+            $(window).on("resize.miller_column", function(event) {
 
-                waitForFinalEvent(function () {
+                waitForFinalEvent(function() {
 
                     if (isDebugEnabled) {
                         console.log("window resized..");
