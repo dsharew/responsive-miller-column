@@ -1,0 +1,23 @@
+.miller-col-list-item .list-item-text {
+    font-family: "Roboto-light", sans-serif;
+}
+
+.miller-col-title-text {
+    font-family: "Roboto-bold", sans-serif;
+    text-transform: uppercase;
+    font-size: 90%;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.material-icons {
+    color: #bbb;
+    -webkit-transition: 300ms;
+    -moz-transition: 300ms;
+    -ms-transition: 300ms;
+    transition: 300ms;
+}
+
+.miller-col-nav .material-icons {
+    font-size: 2.85em;
+}
