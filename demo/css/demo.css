@@ -57,3 +57,8 @@ body {
 .miller-col-nav .material-icons {
     font-size: 2.85em;
 }
+
+.spinner-wrapper{
+    position: relative;
+    margin-top: 40px;
+}

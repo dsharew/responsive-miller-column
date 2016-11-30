@@ -55,7 +55,7 @@ function createChildrenCategoryItems(categoryItemCollection, categoriesCollectio
 
         var numChildren2 = parseInt(Math.random() * 6);
 
-	if (category.getIsLowestLevel()) numChildren2 = 0;
+        if (category.getIsLowestLevel()) numChildren2 = 0;
 
         categoryItem.setItemName(category.getCategoryName() + " item " + i);
         categoryItem.setHasChildren(numChildren2 != 0);
@@ -68,8 +68,8 @@ function createChildrenCategoryItems(categoryItemCollection, categoriesCollectio
 
         var childCategory = findCategoryByParentId(categoriesCollection, category.getCategoryId());
 
-	if (!category.getIsLowestLevel())
-	        createChildrenCategoryItems(categoryItemCollection, categoriesCollection, childCategory, categoryItem, numChildren2);
+        if (!category.getIsLowestLevel())
+            createChildrenCategoryItems(categoryItemCollection, categoriesCollection, childCategory, categoryItem, numChildren2);
 
     }
 
@@ -83,24 +83,37 @@ function createChildrenCategoryItems(categoryItemCollection, categoriesCollectio
 
         var categories = db.addCollection('categories');
         var itemCategories = db.addCollection('itemCategories');
-
-        initDemoData(db, categories, itemCategories);
-
-        console.log("demo db fully initialized.");
-
-        var rootCategory = findCategoryByParentId(categories, null);
-        var rootItemCategories = itemCategories.find({
-            categoryId: rootCategory.getCategoryId()
-        });
-
-        rootCategory.items = rootItemCategories;
-
         var $millerCol = $("#category-miller-cols-container");
 
-        $millerCol.millerColumn({
-            isReadOnly: true,
-            initData: rootCategory
-        });
+        var spinner = $("<div/>").append($("<div/>").addClass("spinner"));
+
+        spinner.addClass("spinner-wrapper");
+        
+        $("body").append(spinner);
+
+        setTimeout(function () {
+
+            initDemoData(db, categories, itemCategories);
+
+            spinner.remove();
+
+            console.log("demo db fully initialized.");
+
+            var rootCategory = findCategoryByParentId(categories, null);
+            var rootItemCategories = itemCategories.find({
+                categoryId: rootCategory.getCategoryId()
+            });
+
+            rootCategory.items = rootItemCategories;
+
+            $millerCol.millerColumn({
+                isReadOnly: true,
+                initData: rootCategory
+            });
+
+
+        }, 100);
+
 
         $millerCol.on("item-selected", ".miller-col-list-item", function (event, data) {
 
