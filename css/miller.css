@@ -87,7 +87,7 @@
     float: right;
 }
 
-.miller-col-nav:hover {
+.miller-col-nav:hover > * {
     cursor: pointer;
     color: #777;
 }
