@@ -11,6 +11,7 @@ Miller columns (also known as Cascading) are a browsing/visualization technique 
 <h2>Main Features</h2>
 1. Responsive on all screen sizes
 2. Material Design support
+3. Editable
 
 <h2>Dependency</h2>
 _jQuery_
