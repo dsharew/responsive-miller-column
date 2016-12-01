@@ -1,6 +1,8 @@
 $bg-color-white: #fff;
 $bg-color-selected: #eaeaea;
 $color-gray: #777;
+$miller-col-title-height: 48px;
+$miller-col-title-padding: 10px;
 $min-height: 300px;
 @mixin box-sizing($box-model) {
     -webkit-box-sizing: $box-model;
@@ -178,12 +180,12 @@ $min-height: 300px;
 
 .miller-col-title {
     text-align: center;
-    padding: 10px;
+    padding: $miller-col-title-padding;
     font-weight: 900;
     @include border(0px, 0px, 1px, 0px, solid #DBDBDB);
     @include shadow(1px, 1px, 10px, 0px, rgba(0, 0, 0, 0.05));
     @include position($pos: absolute, $left: null, $right: null, $top: null, $bottom: null);
-    height: 48px;
+    height: $miller-col-title-height;
     width: 100%;
     background: $bg-color-white;
     z-index: 10;
