@@ -1,1 +1,317 @@
+$bg-color-white: #fff;
+$bg-color-selected: #eaeaea;
+$color-gray: #777;
+$min-height: 300px;
+@mixin box-sizing($box-model) {
+    -webkit-box-sizing: $box-model;
+    -moz-box-sizing: $box-model;
+    box-sizing: $box-model;
+}
 
+@mixin display($displayValue) {
+    display: $displayValue;
+}
+
+@mixin displayFlex() {
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-box;
+}
+
+@mixin shadow($x, $y, $blur, $spread, $color) {
+    -webkit-box-shadow: $x $y $blur $color;
+    -moz-box-shadow: $x $y $blur $color;
+    box-shadow: $x $y $blur $color;
+}
+
+@mixin border($border-top-weight, $border-right-weight, $border-bottom-weight, $border-left-weight, $border-type-color) {
+    border-top: $border-top-weight $border-type-color;
+    border-right: $border-right-weight $border-type-color;
+    border-bottom: $border-bottom-weight $border-type-color;
+    border-left: $border-left-weight $border-type-color;
+}
+
+@mixin flexDisplay($value) {
+    -webkit-box-flex: $value;
+    -ms-flex: $value;
+    flex: $value;
+}
+
+@mixin flexDirection($value) {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: $value;
+    flex-direction: $value;
+}
+
+@mixin transition($type-duration-animation) {
+    -webkit-transition: $type-duration-animation;
+    -moz-transition: $type-duration-animation;
+    -o-transition: $type-duration-animation;
+    transition: $type-duration-animation;
+}
+
+@mixin transform ($transforms) {
+    -moz-transform: $transforms;
+    -o-transform: $transforms;
+    -ms-transform: $transforms;
+    -webkit-transform: $transforms;
+    transform: $transforms;
+}
+
+@mixin rotate($deg) {
+    @include transform(rotate(#{$deg}));
+}
+
+@mixin translate ($x, $y) {
+    @include transform(translate($x, $y));
+}
+
+@mixin position ($pos, $left: null, $right: null, $top: null, $bottom: null) {
+    position: $pos;
+    left: $left;
+    right: $right;
+    top: $top;
+    bottom: $bottom;
+}
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    border-radius: $radius;
+    background-clip: padding-box;
+}
+
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie);
+}
+
+* [class^=miller] {
+    @include box-sizing(border-box);
+    padding: 0;
+    margin: 0;
+}
+
+.miller-cols-container-wrapper {
+    max-width: 75%;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+    background-color: $bg-color-white;
+}
+
+.miller-cols-body {
+    overflow: hidden;
+    height: 100%;
+    min-height: $min-height;
+    position: relative;
+    z-index: 1;
+    margin: 0 auto;
+    @include border(0px, 0px, 0px, 1px, solid #DBDBDB);
+    @include displayFlex();
+}
+
+.miller-col-container,
+.miller-col-loading-container {
+    position: relative;
+    padding: 0;
+    overflow-wrap: break-word;
+    @include displayFlex();
+    @include border(1px, 1px, 1px, 0, solid #DBDBDB);
+    @include flexDisplay(1);
+    @include flexDirection(column);
+}
+
+.miller-col-list-item.selected {
+    background: $bg-color-selected;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.miller-col-loading-container .miller-col-body {
+    width: 100%;
+    height: 100%;
+}
+
+.miller-col-loading-container.col-loading .loading-icon-container {
+    height: 5rem;
+    width: 5rem;
+    @include position($pos: absolute, $left: 45%, $right: null, $top: 10%, $bottom: null);
+    @include translate(-50%, -50%);
+    background-size: contain;
+}
+
+.miller-col-nav {
+    @include position($pos: absolute, $left: null, $right: null, $top: 50%, $bottom: null);
+    @include translate($x: null, $y: -50%);
+    &:hover {
+        cursor: pointer;
+        color: #777;
+    }
+}
+
+.miller-col-nav .material-icons {
+    font-size: 3em;
+    font-weight: 300;
+    float: right;
+}
+
+.miller-col-nav.nav-prev {
+    @include position($pos: null, $left: 0, $right: null, $top: null, $bottom: null);
+    @include translate(-100%, $y: null);
+}
+
+.miller-col-nav.nav-next {
+    @include position($pos: null, $left: null, $right: 0, $top: null, $bottom: null);
+    @include translate(-100%, $y: null);
+}
+
+.miller-col-loading-container.hidden,
+.miller-col-container.hidden {
+    display: none;
+}
+
+.miller-col-nav.hidden {
+    visibility: hidden;
+    @include opacity(0);
+}
+
+.miller-col-title {
+    text-align: center;
+    padding: 10px;
+    font-weight: 900;
+    @include border(0px, 0px, 1px, 0px, solid #DBDBDB);
+    @include shadow(1px, 1px, 10px, 0px, rgba(0, 0, 0, 0.05));
+    @include position($pos: absolute, $left: null, $right: null, $top: null, $bottom: null);
+    height: 48px;
+    width: 100%;
+    background: $bg-color-white;
+    z-index: 10;
+}
+
+.miller-col-title-text {
+    text-transform: uppercase;
+    font-size: 90%;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.miller-col-actions {
+    float: right;
+}
+
+.miller-col-actions .material-icons {
+    cursor: pointer;
+}
+
+.miller-col-container,
+.miller-col-loading-container {
+    min-width: 210px;
+    max-width: 400px;
+}
+
+.miller-col-body {
+    -webkit-overflow-scrolling: touch;
+    margin-top: 48px;
+    padding-top: 0;
+    overflow-y: auto;
+}
+
+.miller-col-list-item {
+    padding: 10px 28px 10px 15px;
+    font-weight: 300;
+    display: table;
+    width: 100%;
+    color: rgba(0, 0, 0, 0.75);
+    position: relative;
+    text-align: left;
+    word-break: break-all;
+}
+
+.miller-col-list-item > * {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.miller-col-list-item .list-item-text {
+    float: left;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.miller-col-list-item .has-children {
+    float: right;
+    padding-top: 2px;
+}
+
+.miller-col-list-item .list-item-actions {
+    display: none;
+    @include position($pos: absolute, $left: null, $right: 40px, $top: null, $bottom: null);
+}
+
+.miller-col-list-item:hover .list-item-actions {
+    display: inline;
+}
+
+.miller-col-list-item:hover .material-icons,
+.miller-col-list-item.selected .material-icons {
+    color: $color-gray;
+}
+
+.list-item-actions .material-icons {
+    padding-left: 20px;
+    @include opacity(0.6);
+}
+
+.list-item-actions .material-icons:hover {
+    @include opacity(1);
+}
+
+.miller-col-list-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.text-node {
+    white-space: nowrap;
+}
+
+
+/*
+    Spinner style.
+*/
+
+.spinner {
+    min-width: 24px;
+    min-height: 24px;
+}
+
+.spinner:before {
+    content: 'Loading…';
+    width: 16px;
+    height: 16px;
+    margin-top: -10px;
+    margin-left: -10px;
+    @include position($pos: absolute, $left: 50%, $right: null, $top: 50%, $bottom: null);
+}
+
+.spinner:not(:required):before {
+    content: '';
+    @include border-radius(50%);
+    @include border(2px, 2px, 2px, 2px, solid rgba(0, 0, 0, .3));
+    border-top-color: rgba(0, 0, 0, .6);
+    animation: spinner .6s linear infinite;
+    -webkit-animation: spinner .6s linear infinite;
+}
+
+@keyframes spinner {
+    to {
+        @include rotate(360);
+    }
+}
+
+@-webkit-keyframes spinner {
+    to {
+        @include rotate(360);
+    }
+}
