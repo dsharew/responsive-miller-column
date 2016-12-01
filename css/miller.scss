@@ -158,12 +158,12 @@ $min-height: 300px;
 
 .miller-col-nav.nav-prev {
     @include position($pos: null, $left: 0, $right: null, $top: null, $bottom: null);
-    @include translate(-100%, $y: null);
+    @include translate(-100%, 0%);
 }
 
 .miller-col-nav.nav-next {
     @include position($pos: null, $left: null, $right: 0, $top: null, $bottom: null);
-    @include translate(-100%, $y: null);
+    @include translate(100%, 0%);
 }
 
 .miller-col-loading-container.hidden,
