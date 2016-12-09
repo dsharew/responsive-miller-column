@@ -1,5 +1,5 @@
 /**
- * v1.2.1
+ * v1.2.1.1
  */
 
 function Category() {
@@ -8,48 +8,48 @@ function Category() {
 
     _this.categoryId = guid();
 
-    _this.setCategoryId = function(categoryId) {
+    _this.setCategoryId = function (categoryId) {
 
         _this.categoryId = categoryId;
 
-    }
+    };
 
-    _this.getCategoryId = function() {
+    _this.getCategoryId = function () {
         return _this.categoryId;
-    }
+    };
 
 
-    _this.setCategoryName = function(categoryName) {
+    _this.setCategoryName = function (categoryName) {
 
         _this.categoryName = categoryName;
 
-    }
-    _this.getCategoryName = function() {
+    };
+    _this.getCategoryName = function () {
         return _this.categoryName;
-    }
+    };
 
 
-    _this.setParentId = function(parentId) {
+    _this.setParentId = function (parentId) {
 
         _this.parentId = parentId;
 
-    }
-    _this.getParentId = function() {
+    };
+    _this.getParentId = function () {
         return _this.parentId;
-    }
+    };
 
 
-    _this.setIsLowestLevel = function(isLowestLevel) {
+    _this.setIsLowestLevel = function (isLowestLevel) {
         _this.isLowestLevel = isLowestLevel;
-    }
-    _this.getIsLowestLevel = function() {
+    };
+    _this.getIsLowestLevel = function () {
         return _this.isLowestLevel
-    }
+    };
 
-    _this.setItems = function(categoryItems) {
+    _this.setItems = function (categoryItems) {
         _this.items = categoryItems;
-    }
-    _this.getItems = function() {
+    };
+    _this.getItems = function () {
         return _this.items
     }
 
@@ -62,61 +62,61 @@ function CategoryItem() {
 
     _this.itemId = guid();
 
-    _this.setItemId = function(itemId) {
+    _this.setItemId = function (itemId) {
 
         _this.itemId = itemId;
 
-    }
+    };
 
-    _this.getItemId = function() {
+    _this.getItemId = function () {
         return _this.itemId;
-    }
+    };
 
 
-    _this.setItemName = function(itemName) {
+    _this.setItemName = function (itemName) {
 
         _this.itemName = itemName;
 
-    }
-    _this.getItemName = function() {
+    };
+    _this.getItemName = function () {
         return _this.itemName;
-    }
+    };
 
 
-    _this.setParentId = function(parentId) {
+    _this.setParentId = function (parentId) {
 
         _this.parentId = parentId;
 
-    }
-    _this.getParentId = function() {
+    };
+    _this.getParentId = function () {
         return _this.parentId;
-    }
+    };
 
 
-    _this.setCategoryId = function(categoryId) {
+    _this.setCategoryId = function (categoryId) {
 
         _this.categoryId = categoryId;
 
-    }
-    _this.getCategoryId = function() {
+    };
+    _this.getCategoryId = function () {
         return _this.categoryId;
-    }
+    };
 
 
-    _this.setHasChildren = function(hasChildren) {
+    _this.setHasChildren = function (hasChildren) {
         _this.hasChildren = hasChildren;
-    }
-    _this.getHasChildren = function() {
+    };
+    _this.getHasChildren = function () {
         return _this.hasChildren
-    }
+    };
 
 
-    _this.isDeleteable = true;
-    _this.setIsDeletable = function(isDeleteable) {
-        _this.isDeleteable = isDeleteable;
-    }
-    _this.getIsDeleteable = function() {
-        return _this.isDeleteable
+    _this.isDeletable = true;
+    _this.setIsDeletable = function (isDeletable) {
+        _this.isDeletable = isDeletable;
+    };
+    _this.getIsDeletable = function () {
+        return _this.isDeletable
     }
 
 
@@ -128,19 +128,20 @@ function guid() {
             .toString(16)
             .substring(1);
     }
+
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
         s4() + '-' + s4() + s4() + s4();
 }
 
 
-(function($) {
+(function ($) {
 
-    $.fn.millerColumn = function(options) {
+    $.fn.millerColumn = function (options) {
 
         var settings = {
             isReadOnly: true,
             height: '400px'
-        }
+        };
 
         var isDebugEnabled = true;
 
@@ -164,7 +165,7 @@ function guid() {
 
         var windowWidth = $(window).outerWidth();
 
-        //TODO: Rafactor hard coded class and attribute names.
+        //TODO: Refactor hard coded class and attribute names.
 
         if ("addCol" == args[0]) {
 
@@ -195,9 +196,9 @@ function guid() {
                     var selectedCol = lastVisibleCol.is(".col-loading") ? lastVisibleCol.prev() : lastVisibleCol;
                     var selectedListItem = selectedCol.find(getColListItemSelector()).filter(".selected");
 
-                    for (var i = 0; args[1].items && i < args[1].items.length; ++i) {
+                    for (var j = 0; args[1].items && j < args[1].items.length; ++j) {
 
-                        var item = args[1].items[i];
+                        var item = args[1].items[j];
 
                         if (selectedListItem.length != 0 && selectedListItem.data("item-id") != item.parentId) {
 
@@ -208,7 +209,6 @@ function guid() {
                         }
 
                     }
-
 
 
                 } catch (error) {
@@ -246,7 +246,7 @@ function guid() {
 
                 for (var i = 0; i < args[1].items.length; ++i) {
 
-                    var millerColListItem = buildColListItem(args[1].items[i], readOnly)
+                    var millerColListItem = buildColListItem(args[1].items[i], readOnly);
 
                     millerColBody.append(millerColListItem);
 
@@ -262,58 +262,58 @@ function guid() {
 
         } else if ("addItem" == args[0]) {
 
-            var itemData = args[1];
+            var addedItemData = args[1];
 
-            var listParentItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + itemData.parentId + "']");
+            var listParentAddedItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + addedItemData.parentId + "']");
 
-            if (null != listParentItem) {
-                var alreadyChildren = listParentItem.data("has-children")
-                listParentItem.data("has-children", true);
-                listParentItem.attr("data-has-children", true);
+            if (null != listParentAddedItem) {
+                var alreadyChildren = listParentAddedItem.data("has-children");
+                listParentAddedItem.data("has-children", true);
+                listParentAddedItem.attr("data-has-children", true);
                 if (!alreadyChildren) {
-                    listParentItem.append($("<i/>").addClass("material-icons").text("navigate_next").addClass("has-children"));
+                    listParentAddedItem.append($("<i/>").addClass("material-icons").text("navigate_next").addClass("has-children"));
                 }
             }
-            var colContainer = getMillerColContainers.call(this).filter("[data-category-id='" + itemData.categoryId + "']");
+            var colContainer = getMillerColContainers.call(this).filter("[data-category-id='" + addedItemData.categoryId + "']");
 
             if (null == colContainer) {
                 if (isDebugEnabled) {
-                    console.log("Cant find category with id: " + itemData.categoryId);
+                    console.log("Cant find category with id: " + addedItemData.categoryId);
                 }
                 return;
             }
 
             var colListItemContainer = colContainer.find(getColListItemContainer());
 
-            colListItemContainer.append(buildColListItem(itemData, false));
+            colListItemContainer.append(buildColListItem(addedItemData, false));
 
             return this;
 
 
         } else if ("updateItem" == args[0]) {
 
-            var itemData = args[1];
+            var updatedtemData = args[1];
 
-            var listItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + itemData.itemId + "']");
+            var listUpdatedItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + updatedtemData.itemId + "']");
 
-            if (null != listItem)
-                listItem.find(".list-item-text").text(itemData.itemName);
+            if (null != listUpdatedItem)
+                listUpdatedItem.find(".list-item-text").text(updatedtemData.itemName);
 
             return this;
 
         } else if ("deleteItem" == args[0]) {
 
-            var itemData = args[1];
+            var deletedItemData = args[1];
 
-            var listItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + itemData.itemId + "']");
+            var listDeletedItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + deletedItemData.itemId + "']");
 
-            if (null != listItem)
-                listItem.remove();
+            if (null != listDeletedItem)
+                listDeletedItem.remove();
 
-            var listParentItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + itemData.parentId + "']");
+            var listParentItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + deletedItemData.parentId + "']");
 
             if (null != listParentItem) {
-                var childrenLeft = $(this).find(getColListItemSelector()).filter("[data-parent-id = '" + itemData.parentId + "']");
+                var childrenLeft = $(this).find(getColListItemSelector()).filter("[data-parent-id = '" + deletedItemData.parentId + "']");
                 if (null == childrenLeft || childrenLeft.length == 0) {
                     listParentItem.data("has-children", false);
                     listParentItem.attr("data-has-children", false);
@@ -359,7 +359,7 @@ function guid() {
                 console.log("About to calculate total width ...........................");
             }
 
-            getMillerColContainers.call(this).each(function() {
+            getMillerColContainers.call(this).each(function () {
 
                 if (isViewHidden.call(this))
                     return;
@@ -409,7 +409,7 @@ function guid() {
                     .addClass("miller-col-nav nav-prev hidden")
                     .append($("<i/>")
                         .addClass("material-icons")
-                        .text("navigate_before"))
+                        .text("navigate_before"));
 
 
                 var millerColsBody = $("<div/>")
@@ -438,7 +438,7 @@ function guid() {
 
             $(this).css({
                 height: settings.height
-            })
+            });
 
             $(this).attr("millerized", "");
             $(this).attr("data-is-read-only", settings.isReadOnly);
@@ -499,7 +499,7 @@ function guid() {
 
         function getFirstVisibleCol() {
 
-            var firstVisibleCol = getMillerColsBody.call(this).find(".miller-col-container:not(.hidden):first")
+            var firstVisibleCol = getMillerColsBody.call(this).find(".miller-col-container:not(.hidden):first");
 
             return firstVisibleCol.length != 0 ? firstVisibleCol :
                 (isViewHidden.call(getLoadingCol.call(this)) ? null : getLoadingCol.call(this));
@@ -638,9 +638,7 @@ function guid() {
             }
 
 
-            if (!hasLeftHiddenCol.call(this) &&
-                !isNextNavColHidden.call(this) &&
-                !overFlowsWith.call(this, getLastVisibleCol.call(this).next()))
+            if (!hasLeftHiddenCol.call(this) && !isNextNavColHidden.call(this) && !overFlowsWith.call(this, getLastVisibleCol.call(this).next()))
                 resizeMillerColumn.call(this, SHRINK_DIRECTION_RIGHT, SCALE_TYPE_SCALE_UP);
 
         }
@@ -649,7 +647,7 @@ function guid() {
 
             while (isOverFlowing.call(this)) {
 
-                hideView.call(getFirstVisibleCol.call(this))
+                hideView.call(getFirstVisibleCol.call(this));
 
                 showPrevNavCol.call(this);
 
@@ -670,9 +668,7 @@ function guid() {
 
             }
 
-            if (!hasRightHiddenCol.call(this) &&
-                !isPrevNavColHidden.call(this) &&
-                !overFlowsWith.call(this, getFirstVisibleCol.call(this).prev())
+            if (!hasRightHiddenCol.call(this) && !isPrevNavColHidden.call(this) && !overFlowsWith.call(this, getFirstVisibleCol.call(this).prev())
             )
                 resizeMillerColumn.call(this, SHRINK_DIRECTION_LEFT, SCALE_TYPE_SCALE_UP)
 
@@ -690,15 +686,13 @@ function guid() {
 
         }
 
-        function resizeMillerColumn(hideDirection, scaleType) {
+        function resizeMillerColumn(direction, scaleType) {
 
-            //TODO: rename hideDirection to direction
+            scaleType = scaleType || SCALE_TYPE_SCALE_DOWN;
 
-            scaleType = scaleType || SCALE_TYPE_SCALE_DOWN
+            direction = direction || SHRINK_DIRECTION_LEFT;
 
-            hideDirection = hideDirection || SHRINK_DIRECTION_LEFT
-
-            switch (hideDirection) {
+            switch (direction) {
 
                 case SHRINK_DIRECTION_RIGHT:
 
@@ -736,7 +730,7 @@ function guid() {
                     break;
 
                 default:
-                    console.error("Unknow hideDirection: " + hideDirection)
+                    console.error("Unknown hideDirection: " + direction)
 
             }
 
@@ -744,10 +738,9 @@ function guid() {
         }
 
 
-
-        var waitForFinalEvent = (function() {
+        var waitForFinalEvent = (function () {
             var timers = {};
-            return function(callback, ms, uniqueId) {
+            return function (callback, ms, uniqueId) {
                 if (!uniqueId) {
                     uniqueId = "Don't call this twice without a uniqueId";
                 }
@@ -759,7 +752,7 @@ function guid() {
         })();
 
 
-        return this.each(function() {
+        return this.each(function () {
 
             var millerColumn = this;
 
@@ -774,7 +767,7 @@ function guid() {
 
             }
 
-            getPrevNav.call(millerColumn).on("click", function() {
+            getPrevNav.call(millerColumn).on("click", function () {
 
                 showView.call(getFirstVisibleCol.call(millerColumn).prev());
 
@@ -783,10 +776,9 @@ function guid() {
 
                 resizeMillerColumn.call(millerColumn, SHRINK_DIRECTION_RIGHT);
 
-
             });
 
-            getNextNav.call(millerColumn).on("click", function() {
+            getNextNav.call(millerColumn).on("click", function () {
 
                 showView.call(getLastVisibleCol.call(millerColumn).next());
 
@@ -798,7 +790,7 @@ function guid() {
             });
 
 
-            getMillerColsBody.call(millerColumn).on("DOMNodeInserted", function(event) {
+            getMillerColsBody.call(millerColumn).on("DOMNodeInserted", function (event) {
 
                 //resize only if col is added.
                 if (!$(event.target).is(getColContainerSelector()))
@@ -815,7 +807,7 @@ function guid() {
             });
 
 
-            getMillerColsBody.call(millerColumn).on("DOMNodeRemoved", function(event) {
+            getMillerColsBody.call(millerColumn).on("DOMNodeRemoved", function (event) {
 
                 //resize only if col is removed.
                 if (!$(event.target).is(getColContainerSelector()))
@@ -831,7 +823,7 @@ function guid() {
             /**
              * Fires item-selected event when an item is selected along with the necessary data.
              */
-            getMillerColsBody.call(millerColumn).on("click", getColListItemSelector(), function() {
+            getMillerColsBody.call(millerColumn).on("click", getColListItemSelector(), function () {
 
                 var currentColContainer = $(this).closest(getColContainerSelector());
 
@@ -861,10 +853,8 @@ function guid() {
 
             });
 
-            getMillerColsBody.call(millerColumn).on("click", ".list-item-actions .edit", function(event) {
+            getMillerColsBody.call(millerColumn).on("click", ".list-item-actions .edit", function (event) {
 
-                var currentColContainer = $(this).closest(getColContainerSelector());
-                var parentColContainer = currentColContainer.prev();
                 var currentItemContainer = $(this).closest(getColListItemSelector());
 
                 //Firing edit-item event.
@@ -880,10 +870,8 @@ function guid() {
 
             });
 
-            getMillerColsBody.call(millerColumn).on("click", ".list-item-actions .delete", function(event) {
+            getMillerColsBody.call(millerColumn).on("click", ".list-item-actions .delete", function (event) {
 
-                var currentColContainer = $(this).closest(getColContainerSelector());
-                var parentColContainer = currentColContainer.prev();
                 var currentItemContainer = $(this).closest(getColListItemSelector());
 
                 //Firing delete-item event.
@@ -899,7 +887,7 @@ function guid() {
 
             });
 
-            getMillerColsBody.call(millerColumn).on("click", ".miller-col-actions .action-add", function() {
+            getMillerColsBody.call(millerColumn).on("click", ".miller-col-actions .action-add", function () {
 
                 var currentColContainer = $(this).closest(getColContainerSelector());
                 var parentColContainer = currentColContainer.prev();
@@ -907,9 +895,9 @@ function guid() {
                 //Firing add-item event.
                 var data = getCategory.call(currentColContainer);
 
-                if(parentColContainer)
+                if (parentColContainer)
                     data.parentId = $(parentColContainer).find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
-                
+
                 $(currentColContainer).trigger("add-item", data);
 
                 if (isDebugEnabled) {
@@ -919,9 +907,9 @@ function guid() {
             });
 
 
-            $(window).on("resize.miller_column", function(event) {
+            $(window).on("resize.miller_column", function (event) {
 
-                waitForFinalEvent(function() {
+                waitForFinalEvent(function () {
 
                     if (isDebugEnabled) {
                         console.log("window resized..");
@@ -943,7 +931,7 @@ function guid() {
                         resizeMillerColumn.call(millerColumn, SHRINK_DIRECTION_LEFT, SCALE_TYPE_SCALE_UP);
                     }
 
-                    //renable navs
+                    //re-enable navs
                     if (hasRightHiddenCol.call(millerColumn))
                         showNextNavCol.call(millerColumn);
 
