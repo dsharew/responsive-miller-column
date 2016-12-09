@@ -1,3 +1,7 @@
+/**
+ * v1.2.1
+ */
+
 function Category() {
 
     var _this = this;
@@ -764,7 +768,7 @@ function guid() {
             if (args[0] && args[0]["initData"]) { //arg[0] root col
 
                 //hide all cols except col load b/se arg[0] => root col
-                $(getColContainerSelectorExcludeColLoading()).remove();
+                $(millerColumn).find(getColContainerSelectorExcludeColLoading()).remove();
 
                 $(millerColumn).millerColumn("addCol", args[0]["initData"]);
 
@@ -903,6 +907,9 @@ function guid() {
                 //Firing add-item event.
                 var data = getCategory.call(currentColContainer);
 
+                if(parentColContainer)
+                    data.parentId = $(parentColContainer).find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
+                
                 $(currentColContainer).trigger("add-item", data);
 
                 if (isDebugEnabled) {
