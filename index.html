@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html>
 
-<head layout:fragment="head">
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/miller.css" />
-    <link rel="stylesheet" href="css/miller-material.css" />
-    <link rel="stylesheet" href="css/material-design-font-style.css" />
-    <link rel="stylesheet" href="demo/css/demo.css" />
+    <link rel="stylesheet" href="css/miller.css"/>
+    <link rel="stylesheet" href="css/miller-material.css"/>
+    <link rel="stylesheet" href="css/material-design-font-style.css"/>
+    <link rel="stylesheet" href="demo/css/demo.css"/>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/miller.js"></script>
     <script type="text/javascript" src="demo/js/lokijs.min.js"></script>
+    <script type="text/javascript" src="demo/js/simple-popup.min.js"></script>
     <script type="text/javascript" src="demo/js/demo.js"></script>
 </head>
 
 <body>
-    
-    <div id="category-miller-cols-container">
-    </div>
+
+<div class="switch demo3">
+    <h3>Editable?</h3>
+    <input type="checkbox" id = "read_only_input" value="off">
+    <label><i></i></label>
+</div>
+
+<div id="category-miller-cols-container">
+</div>
+
 </body>
 
 </html>

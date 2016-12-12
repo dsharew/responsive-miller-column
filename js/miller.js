@@ -216,7 +216,7 @@ function guid() {
                     hideLoadingCol.call(this);
                 }
 
-                var readOnly = $(this).data("is-read-only");
+                var readOnly = JSON.parse($(this).attr("data-is-read-only"));
 
                 if (readOnly && args[1].items.length == 0)
                     return;
@@ -307,9 +307,6 @@ function guid() {
 
             var listDeletedItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + deletedItemData.itemId + "']");
 
-            if (null != listDeletedItem)
-                listDeletedItem.remove();
-
             var listParentItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + deletedItemData.parentId + "']");
 
             if (null != listParentItem) {
@@ -317,9 +314,15 @@ function guid() {
                 if (null == childrenLeft || childrenLeft.length == 0) {
                     listParentItem.data("has-children", false);
                     listParentItem.attr("data-has-children", false);
-                    listParentItem.find("i").filter(".has-children").remove()
+                    listParentItem.find("i").filter(".has-children").remove();
                 }
             }
+
+            //remove children col container.
+            $(listDeletedItem).closest(getColContainerSelector()).next(getColContainerSelectorExcludeColLoading()).remove();
+
+            if (null != listDeletedItem)
+                listDeletedItem.remove();
 
             return this;
         }
@@ -403,7 +406,7 @@ function guid() {
 
         function initialize() {
 
-            if (getMillerColsBody.length == 0) { //if user has not build the miller ui structure using html manually
+            if (getMillerColsBody.call(this).length == 0) { //if user has not build the miller ui structure using html manually
 
                 var preNav = $("<span/>")
                     .addClass("miller-col-nav nav-prev hidden")

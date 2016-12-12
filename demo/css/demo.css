@@ -62,3 +62,213 @@ body {
     position: relative;
     margin-top: 40px;
 }
+
+/* style for editable miller col feature*/
+
+.popup-wrapper {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px #aaa;
+    overflow: hidden;
+    top: 100px;
+}
+.popup-title {
+    padding: 10px 15px;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #f0f0f0;
+}
+.popup-title h3 {
+    margin: 0;
+    line-height: 1.5em;
+    color: #333;
+}
+.popup-body {
+    padding: 10px 15px;
+    color: #555;
+}
+.popup-close, .button, .popup-wrapper .material-icons {
+    float: right;
+    margin-top: 2px;
+    padding: 0;
+    font-size: 24px;
+    line-height: 1;
+    border: 0;
+    background: transparent;
+    color: #aaa;
+    cursor: pointer;
+}
+.popup-close:hover,
+.button:hover,
+.popup-wrapper .material-icons:hover{
+    color: #333;
+}
+
+.popup-wrapper .footer{
+
+    padding: 10px 0px;
+
+}
+
+.clearfix{
+    display: block;
+    clear: both;
+}
+
+input{
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input:focus{
+    border-color: #ccc;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(200,200,200,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(200,200,200,.6);
+}
+
+
+/*style for switch button */
+/* GLOBALS */
+
+*,
+*:after,
+*:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.switch {
+    margin: 50px auto;
+    position: relative;
+}
+
+.switch label {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: block;
+}
+
+.switch input {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    opacity: 0;
+    z-index: 100;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.switch.demo3 {
+    width: 180px;
+    height: 50px;
+    text-align: center;
+}
+
+.switch.demo3 label {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #a5a39d;
+    border-radius: 40px;
+}
+
+.switch.demo3 label:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -8px; right: -8px; bottom: -8px; left: -8px;
+    border-radius: inherit;
+}
+
+.switch.demo3 label:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -18px; right: -18px; bottom: -18px; left: -18px;
+    border-radius: inherit;
+    box-shadow:
+            0 1px 0 rgba(255,255,255,0.5);
+    -webkit-filter: blur(1px);
+    -moz-filter: blur(1px);
+    -ms-filter: blur(1px);
+    -o-filter: blur(1px);
+    filter: blur(1px);
+}
+
+.switch.demo3 label i {
+    display: block;
+    height: 100%;
+    width: 60%;
+    border-radius: inherit;
+    background: silver;
+    position: absolute;
+    z-index: 2;
+    right: 40%;
+    top: 0;
+    box-shadow:
+            inset 0 1px 0 white,
+            0 0 8px rgba(0,0,0,0.3),
+            0 5px 5px rgba(0,0,0,0.2);
+}
+
+.switch.demo3 label i:after {
+    content: "";
+    position: absolute;
+    left: 15%;
+    top: 25%;
+    width: 70%;
+    height: 50%;
+    border-radius: inherit;
+}
+
+.switch.demo3 label i:before {
+    content: "off";
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: bold;
+    color: rgba(0,0,0,0.4);
+    text-shadow: 0 1px 0 #bcb8ae, 0 -1px 0 #97958e;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    position: absolute;
+    top: 50%;
+    margin-top: -12px;
+    right: -50%;
+}
+
+.switch.demo3 input:checked ~ label {
+    background: #9abb82;
+}
+
+.switch.demo3 input:checked ~ label i {
+    right: -1%;
+}
+
+.switch.demo3 input:checked ~ label i:before {
+    content: "on";
+    right: 115%;
+    color: #82a06a;
+    text-shadow:
+            0 1px 0 #afcb9b,
+            0 -1px 0 #6b8659;
+}

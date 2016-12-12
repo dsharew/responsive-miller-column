@@ -1,4 +1,4 @@
-var CONSTANT_MAX_NUMBER_CATEGORIES = 10
+var CONSTANT_MAX_NUMBER_CATEGORIES = 6;
 
 function findCategoryByParentId(categoriesCollection, parentId) {
 
@@ -75,6 +75,60 @@ function createChildrenCategoryItems(categoryItemCollection, categoriesCollectio
 
 }
 
+function createDialog($dialogBodyContent, dialogTitle){
+
+    var $dialog = $("<div/>").attr("id", "popup").addClass("popup-wrapper hide");
+    var $dialogContent = $("<div/>").addClass("popup-content");
+    var $dialogTitle = $("<div/>").addClass("popup-title");
+    var $btnClose = $("<button/>").attr("type", "button").addClass("popup-close").text("X");
+    var $h3 = $("<h3/>").text(dialogTitle);
+    var $dialogBody = $("<div/>").addClass("popup-body").append($dialogBodyContent);
+
+    $dialogTitle.append($btnClose).append($h3);
+
+    $dialogContent.append($dialogTitle).append($dialogBody);
+
+    return $dialog.append($dialogContent);
+}
+
+function showSpinner(){
+
+    var spinner = $("<div/>").append($("<div/>").addClass("spinner"));
+
+    spinner.addClass("spinner-wrapper");
+
+    $("body").append(spinner);
+
+}
+
+function hideSpinner(){
+    $(".spinner-wrapper").remove();
+}
+
+function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategories){
+
+    showSpinner();
+
+    setTimeout(function () {
+
+        hideSpinner();
+
+        var rootCategory = findCategoryByParentId(categories, null);
+
+        rootCategory.items = itemCategories.find({
+            categoryId: rootCategory.getCategoryId()
+        });
+
+        $millerCol.millerColumn({
+            isReadOnly: isReadOnly,
+            initData: rootCategory
+        });
+
+
+    }, 100);
+
+}
+
 (function ($) {
 
     $(document).ready(function () {
@@ -85,17 +139,13 @@ function createChildrenCategoryItems(categoryItemCollection, categoriesCollectio
         var itemCategories = db.addCollection('itemCategories');
         var $millerCol = $("#category-miller-cols-container");
 
-        var spinner = $("<div/>").append($("<div/>").addClass("spinner"));
-
-        spinner.addClass("spinner-wrapper");
-        
-        $("body").append(spinner);
+        showSpinner();
 
         setTimeout(function () {
 
             initDemoData(db, categories, itemCategories);
 
-            spinner.remove();
+            hideSpinner();
 
             console.log("demo db fully initialized.");
 
@@ -137,7 +187,191 @@ function createChildrenCategoryItems(categoryItemCollection, categoriesCollectio
 
         });
 
-    })
+        $millerCol.on("add-item", ".miller-col-container", function (event, data) {
+
+            var $dialogBody = $("<div/>");
+
+            $dialogBody.append($("<input/>").attr("name", "itemName"));
+
+            var $dialogFooter = $("<div/>").addClass("footer");
+            var $buttonCreate = $("<button/>").attr("type", "button").addClass("positive button").append($("<i/>").addClass("material-icons").addClass("add").text("add"));
+
+            $dialogFooter.append($buttonCreate).append($("<div/>").addClass("clearfix"));
+
+            $dialogBody.append($dialogFooter);
+
+            var dialog = createDialog($dialogBody, "Create child for: " + data.categoryName);
+
+            $(dialog).on("click touch", ".popup-close", function(){
+
+                $("#popup").remove();
+
+            });
+
+            $(dialog).on("click touch", ".material-icons.add", function(event){
+
+                event.preventBubble();
+
+                var itemName = $(this).closest("#popup").find("input[name='itemName']").val();
+
+                var categoryItem = new CategoryItem();
+
+                categoryItem.setItemName(itemName);
+                categoryItem.setCategoryId(data.categoryId);
+                categoryItem.setParentId(data.parentId);
+                categoryItem.setHasChildren(false);
+                categoryItem.setIsDeletable(false);
+
+                itemCategories.insert(categoryItem);
+
+                $millerCol.millerColumn("addItem", categoryItem);
+
+                $("#popup").remove();
+
+            });
+
+            $("body").append(dialog);
+
+            dialog= dialog.popup({
+                width: 400,
+                height: "auto",
+                top: 100
+            });
+
+            dialog.open();
+
+        });
+
+        $millerCol.on("delete-item", ".miller-col-list-item", function (event, data) {
+
+            var $dialogBody = $("<div/>");
+
+            $dialogBody.append("Are you sure you want to delete this item?");
+
+            var $dialogFooter = $("<div/>").addClass("footer");
+            var $buttonCreate = $("<button/>").attr("type", "button").addClass("positive button").append($("<i/>").addClass("material-icons").addClass("delete").text("delete"));
+
+            $dialogFooter.append($buttonCreate).append($("<div/>").addClass("clearfix"));
+
+            $dialogBody.append($dialogFooter);
+
+            var dialog = createDialog($dialogBody, "Delete Item " + data.itemName);
+
+            $(dialog).on("click touch", ".popup-close", function(){
+
+                $("#popup").remove();
+
+            });
+
+            $(dialog).on("click touch", ".material-icons.delete", function(){
+
+                var categoryItem = itemCategories.findOne({
+                    itemId: data.itemId
+                });
+                var categoryItemIds = [];
+
+                categoryItemIds.push(categoryItem.itemId);
+
+                var children = itemCategories.find({
+                    parentId: data.itemId
+                });
+
+                //remove root item
+                itemCategories.remove(categoryItem);
+
+                while(children.length != 0){
+
+                    var child = children.pop();
+
+                    categoryItemIds.push(child.itemId);
+
+                    children = children.concat(itemCategories.find({
+                        parentId: child.itemId
+                    }));
+
+                    itemCategories.remove(child);
+
+                }
+
+                $millerCol.millerColumn("deleteItem", categoryItem);
+
+                $("#popup").remove();
+
+            });
+
+            $("body").append(dialog);
+
+            dialog= dialog.popup({
+                width: 400,
+                height: "auto",
+                top: 100
+            });
+
+            dialog.open();
+
+        });
+
+        $millerCol.on("edit-item", ".miller-col-list-item", function (event, data) {
+
+            var $dialogBody = $("<div/>");
+
+            $dialogBody.append($("<input/>").attr("name", "itemName").attr("value", data.itemName));
+
+            var $dialogFooter = $("<div/>").addClass("footer");
+            var $buttonCreate = $("<button/>").attr("type", "button").addClass("positive button").append($("<i/>").addClass("material-icons").addClass("edit").text("save"));
+
+            $dialogFooter.append($buttonCreate).append($("<div/>").addClass("clearfix"));
+
+            $dialogBody.append($dialogFooter);
+
+            var dialog = createDialog($dialogBody, "Edit Item");
+
+            $(dialog).on("click touch", ".popup-close", function(){
+
+                $("#popup").remove();
+
+            });
+
+            $(dialog).on("click touch", ".material-icons.edit", function(){
+
+                var itemName = $(this).closest("#popup").find("input[name='itemName']").val();
+
+                var categoryItem = itemCategories.findOne({
+                    itemId: data.itemId
+                });
+
+                categoryItem.itemName = (itemName);
+
+                itemCategories.update(categoryItem);
+
+                $millerCol.millerColumn("updateItem", categoryItem);
+
+                $("#popup").remove();
+
+            });
+
+            $("body").append(dialog);
+
+            dialog= dialog.popup({
+                width: 400,
+                height: "auto",
+                top: 100
+            });
+
+            dialog.open();
+
+        });
+
+        $("#read_only_input").on("click touch", function(){
+
+            $(this).val() == "off" ?  $(this).val("on") : $(this).val("off");
+
+            reInitializeMillerCol($millerCol, $(this).val() == "off", categories, itemCategories);
+
+        });
+
+
+    });
 
 
 })(jQuery);
