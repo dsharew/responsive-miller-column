@@ -290,7 +290,7 @@ Usage: e.g how to listen for this event:
 ```javascript
  $millerCol.on("item-selected", ".miller-col-list-item", function (event, data) {
 	//your logic here.
- }
+ });
 
 ```
 
@@ -302,7 +302,7 @@ Usage: e.g how to listen for this event:
 ```javascript
  $millerCol.on("add-item", ".miller-col-container", function (event, data) {
 	//your logic here.
- }
+ });
 
 ```
 
@@ -314,7 +314,7 @@ Usage: e.g how to listen for this event:
 ```javascript
  $millerCol.on("edit-item", ".miller-col-list-item", function (event, data) {
 	//your logic here.
- }
+ });
 
 ```
 
@@ -326,6 +326,6 @@ Usage: e.g how to listen for this event:
 ```javascript
  $millerCol.on("delete-item", ".miller-col-list-item", function (event, data) {
 	//your logic here.
- }
+ });
 
 ```
