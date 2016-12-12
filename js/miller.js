@@ -1,5 +1,5 @@
 /**
- * v1.2.1.1
+ * v1.2.2
  */
 
 function Category() {
@@ -83,6 +83,16 @@ function CategoryItem() {
     };
 
 
+    _this.setItemIcon = function (itemIcon) {
+
+        _this.itemIcon = itemIcon;
+
+    };
+    _this.getItemIcon = function () {
+        return _this.itemIcon;
+    };
+
+
     _this.setParentId = function (parentId) {
 
         _this.parentId = parentId;
@@ -117,7 +127,7 @@ function CategoryItem() {
     };
     _this.getIsDeletable = function () {
         return _this.isDeletable
-    }
+    };
 
 
 }
@@ -267,10 +277,10 @@ function guid() {
             var listParentAddedItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + addedItemData.parentId + "']");
 
             if (null != listParentAddedItem) {
-                var alreadyChildren = listParentAddedItem.data("has-children");
+                var parentAlreadyWithChildren = listParentAddedItem.data("has-children");
                 listParentAddedItem.data("has-children", true);
                 listParentAddedItem.attr("data-has-children", true);
-                if (!alreadyChildren) {
+                if (!parentAlreadyWithChildren) {
                     listParentAddedItem.append($("<i/>").addClass("material-icons").text("navigate_next").addClass("has-children"));
                 }
             }
@@ -296,8 +306,10 @@ function guid() {
 
             var listUpdatedItem = $(this).find(getColListItemSelector()).filter("[data-item-id = '" + updatedtemData.itemId + "']");
 
-            if (null != listUpdatedItem)
+            if (null != listUpdatedItem) {
                 listUpdatedItem.find(".list-item-text").text(updatedtemData.itemName);
+                listUpdatedItem.find(".list-item-icon").text(updatedtemData.itemIcon);
+            }
 
             return this;
 
@@ -337,6 +349,10 @@ function guid() {
             millerColListItem.attr("data-category-id", item.categoryId);
             millerColListItem.attr("data-is-deletable", item.isDeletable);
             millerColListItem.attr("data-item-name", item.itemName);
+            millerColListItem.attr("data-item-icon", item.itemIcon);
+
+            if (item.itemIcon != "")
+                millerColListItem.append($("<i/>").addClass("material-icons list-item-icon").text(item.itemIcon));
 
             millerColListItem.append($("<span/>").text(item.itemName).addClass("list-item-text"));
 
@@ -359,7 +375,7 @@ function guid() {
             var totalWidth = 0;
 
             if (isDebugEnabled) {
-                console.log("About to calculate total width ...........................");
+                console.log("About to calculate total width ...");
             }
 
             getMillerColContainers.call(this).each(function () {
@@ -601,6 +617,7 @@ function guid() {
             categoryItem.setCategoryId($(this).data("category-id"));
             categoryItem.setItemId($(this).data("item-id"));
             categoryItem.setItemName($(this).data("item-name"));
+            categoryItem.setItemIcon($(this).data("item-icon"));
             categoryItem.setHasChildren($(this).data("has-children"));
             categoryItem.setIsDeletable($(this).data("is-deletable"));
             categoryItem.setParentId($(this).data("parent-id"));
