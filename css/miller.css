@@ -167,14 +167,17 @@
 }
 
 .miller-col-list-item > * {
-    display: table-cell;
     vertical-align: middle;
 }
 
-.miller-col-list-item .list-item-text {
+.miller-col-list-item .list-item-text .list-item-icon {
     float: left;
     padding-top: 4px;
     padding-bottom: 4px;
+}
+
+.list-item-icon{
+    margin-right: 10px;
 }
 
 .miller-col-list-item .has-children {
