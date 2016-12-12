@@ -127,6 +127,17 @@
     width: 100%;
 }
 
+.miller-col-title .material-icons.action-add{
+    position: absolute;
+    top: 50%;
+    transform: translateX(-100%) translateY(-50%);
+}
+
+.miller-col-title .material-icons.action-add:hover{
+    font-weight: bold;
+    color: gray;
+}
+
 .miller-col-title-text {
     text-transform: uppercase;
     font-size: 90%;
