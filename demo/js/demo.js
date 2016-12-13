@@ -77,6 +77,9 @@ function createChildrenCategoryItems(categoryItemCollection, categoriesCollectio
 
 function createDialog($dialogBodyContent, dialogTitle){
 
+    //remove prev popup instances
+    $("#popup").remove();
+
     var $dialog = $("<div/>").attr("id", "popup").addClass("popup-wrapper hide");
     var $dialogContent = $("<div/>").addClass("popup-content");
     var $dialogTitle = $("<div/>").addClass("popup-title");
@@ -209,8 +212,6 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
             });
 
             $(dialog).on("click touch", ".material-icons.add", function(event){
-
-                event.preventBubble();
 
                 var itemName = $(this).closest("#popup").find("input[name='itemName']").val();
 
