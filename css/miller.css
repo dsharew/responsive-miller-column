@@ -198,9 +198,13 @@
 
 .miller-col-list-item .list-item-actions {
     position: absolute;
-    right: 40px;
+    right: 12px;
     display: none;
 }
+
+.miller-col-list-item[data-has-children="true"] .list-item-actions {
+     right: 40px;
+ }
 
 .miller-col-list-item:hover .list-item-actions {
     display: inline;
@@ -212,7 +216,7 @@
 }
 
 .list-item-actions .material-icons {
-    padding-left: 20px;
+    padding-left: 8px;
     opacity: 0.6;
 }
 
