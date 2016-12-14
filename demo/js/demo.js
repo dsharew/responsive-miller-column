@@ -110,6 +110,8 @@ function hideSpinner(){
 
 function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategories){
 
+    $millerCol.empty();
+
     showSpinner();
 
     setTimeout(function () {
