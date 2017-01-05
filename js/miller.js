@@ -308,6 +308,7 @@ function guid() {
 
             if (null != listUpdatedItem) {
                 listUpdatedItem.find(".list-item-text").text(updatedtemData.itemName);
+                listUpdatedItem.attr("data-item-name", updatedtemData.itemName);
                 listUpdatedItem.find(".list-item-icon").text(updatedtemData.itemIcon);
             }
 
