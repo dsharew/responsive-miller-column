@@ -614,13 +614,13 @@ function guid() {
 
             var categoryItem = new CategoryItem();
 
-            categoryItem.setCategoryId($(this).data("category-id"));
-            categoryItem.setItemId($(this).data("item-id"));
-            categoryItem.setItemName($(this).data("item-name"));
-            categoryItem.setItemIcon($(this).data("item-icon"));
-            categoryItem.setHasChildren($(this).data("has-children"));
-            categoryItem.setIsDeletable($(this).data("is-deletable"));
-            categoryItem.setParentId($(this).data("parent-id"));
+            categoryItem.setCategoryId($(this).attr("data-category-id"));
+            categoryItem.setItemId($(this).attr("data-item-id"));
+            categoryItem.setItemName($(this).attr("data-item-name"));
+            categoryItem.setItemIcon($(this).attr("data-item-icon"));
+            categoryItem.setHasChildren($(this).attr("data-has-children"));
+            categoryItem.setIsDeletable($(this).attr("data-is-deletable"));
+            categoryItem.setParentId($(this).attr("data-parent-id"));
 
             return categoryItem;
 
@@ -630,10 +630,10 @@ function guid() {
 
             var category = new Category();
 
-            category.setCategoryId($(this).data("category-id"));
-            category.setCategoryName($(this).data("category-name"));
-            category.setIsLowestLevel($(this).data("is-lowest-level"));
-            category.setParentId($(this).data("parent-id"));
+            category.setCategoryId($(this).attr("data-category-id"));
+            category.setCategoryName($(this).attr("data-category-name"));
+            category.setIsLowestLevel($(this).attr("data-is-lowest-level"));
+            category.setParentId($(this).attr("data-parent-id"));
 
             return category;
 
