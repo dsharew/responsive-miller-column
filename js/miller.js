@@ -352,7 +352,7 @@ function guid() {
             millerColListItem.attr("data-item-name", item.itemName);
             millerColListItem.attr("data-item-icon", item.itemIcon);
 
-            if (item.itemIcon != "")
+            if (item.itemIcon != "" && item.itemIcon != null)
                 millerColListItem.append($("<i/>").addClass("material-icons list-item-icon").text(item.itemIcon));
 
             millerColListItem.append($("<span/>").text(item.itemName).addClass("list-item-text"));
