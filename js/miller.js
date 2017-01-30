@@ -310,6 +310,7 @@ function guid() {
                 listUpdatedItem.find(".list-item-text").text(updatedtemData.itemName);
                 listUpdatedItem.attr("data-item-name", updatedtemData.itemName);
                 listUpdatedItem.find(".list-item-icon").text(updatedtemData.itemIcon);
+                listUpdatedItem.attr("data-item-icon", updatedtemData.itemIcon);
             }
 
             return this;
@@ -352,8 +353,11 @@ function guid() {
             millerColListItem.attr("data-item-name", item.itemName);
             millerColListItem.attr("data-item-icon", item.itemIcon);
 
+            var $listItemIcon = $("<i/>").addClass("material-icons list-item-icon");
+            millerColListItem.append($listItemIcon);
+
             if (item.itemIcon != "" && item.itemIcon != null)
-                millerColListItem.append($("<i/>").addClass("material-icons list-item-icon").text(item.itemIcon));
+                $listItemIcon.text(item.itemIcon);
 
             millerColListItem.append($("<span/>").text(item.itemName).addClass("list-item-text"));
 
