@@ -58,6 +58,8 @@ function createChildrenCategoryItems(categoryItemCollection, categoriesCollectio
         if (category.getIsLowestLevel()) numChildren2 = 0;
 
         categoryItem.setItemName(category.getCategoryName() + " item " + i);
+        var listIcons = ["", "store", "call", "wifi", "portrait"];
+        categoryItem.setItemIcon(listIcons[parseInt(Math.random() * 6 - 1)]);
         categoryItem.setHasChildren(numChildren2 != 0);
         categoryItem.setCategoryId(category.getCategoryId());
 
@@ -129,7 +131,6 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
             initData: rootCategory
         });
 
-
     }, 100);
 
 }
@@ -144,6 +145,8 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
         var itemCategories = db.addCollection('itemCategories');
         var $millerCol = $("#category-miller-cols-container");
 
+        var iconList = ["clear", "store", "call", "wifi", "portrait"];
+
         showSpinner();
 
         setTimeout(function () {
@@ -157,6 +160,10 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
             var rootCategory = findCategoryByParentId(categories, null);
             var rootItemCategories = itemCategories.find({
                 categoryId: rootCategory.getCategoryId()
+            }).sort( function(obj1, obj2) {
+                if (obj1.itemName == obj2.itemName) return 0;
+                if (obj1.itemName > obj2.itemName) return 1;
+                if (obj1.itemName < obj2.itemName) return -1;
             });
 
             rootCategory.items = rootItemCategories;
@@ -166,9 +173,7 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
                 initData: rootCategory
             });
 
-
         }, 100);
-
 
         $millerCol.on("item-selected", ".miller-col-list-item", function (event, data) {
 
@@ -194,18 +199,31 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
 
         $millerCol.on("add-item", ".miller-col-container", function (event, data) {
 
-            var $dialogBody = $("<div/>");
+            var $dialogFullbody = $("<div/>");
+            var $dialogBody  = $("<div/>").addClass("middle-body");
+
+            $dialogBody.append($("<i/>").attr("id","element-icon").attr("name", "iconName").addClass("material-icons").addClass("dropbtn").text("clear").attr("onclick", "toggleDropdown()"));
+
+            var $dialogDropdown = $("<div/>").attr("id","myDropdown").addClass("dropdown-content");
+
+            for(var k=0; k<iconList.length; k++){
+                 $dialogDropdown.append($("<div/>").addClass("dropdown-element").append($("<i/>").addClass("material-icons").text(iconList[k])));
+            }
+
+            $dialogBody.append($dialogDropdown);
 
             $dialogBody.append($("<input/>").attr("name", "itemName"));
+            $dialogBody.append($("<div/>").addClass("clearfix"));
 
             var $dialogFooter = $("<div/>").addClass("footer");
             var $buttonCreate = $("<button/>").attr("type", "button").addClass("positive button").append($("<i/>").addClass("material-icons").addClass("add").text("add"));
 
             $dialogFooter.append($buttonCreate).append($("<div/>").addClass("clearfix"));
 
-            $dialogBody.append($dialogFooter);
+            $dialogFullbody.append($dialogBody);
+            $dialogFullbody.append($dialogFooter);
 
-            var dialog = createDialog($dialogBody, "Create child for: " + data.categoryName);
+            var dialog = createDialog($dialogFullbody, "Create child for: " + data.categoryName);
 
             $(dialog).on("click touch", ".popup-close", function(){
 
@@ -216,12 +234,15 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
             $(dialog).on("click touch", ".material-icons.add", function(event){
 
                 var itemName = $(this).closest("#popup").find("input[name='itemName']").val();
+                var iconName = $(this).closest("#popup").find("i[name='iconName']").html();
+                if (iconName=="clear") iconName = "";
 
                 var categoryItem = new CategoryItem();
 
                 categoryItem.setItemName(itemName);
                 categoryItem.setCategoryId(data.categoryId);
                 categoryItem.setParentId(data.parentId);
+                categoryItem.setItemIcon(iconName);
                 categoryItem.setHasChildren(false);
                 categoryItem.setIsDeletable(false);
 
@@ -314,20 +335,34 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
 
         });
 
+
         $millerCol.on("edit-item", ".miller-col-list-item", function (event, data) {
 
-            var $dialogBody = $("<div/>");
+            var $dialogFullbody = $("<div/>");
+            var $dialogBody  = $("<div/>").addClass("middle-body");
+
+            $dialogBody.append($("<i/>").attr("id","element-icon").attr("name", "iconName").addClass("material-icons").addClass("dropbtn").text(typeof data.itemIcon == 'undefined' || data.itemIcon == "" ? "clear" : data.itemIcon).attr("onclick", "toggleDropdown()"));
+
+            var $dialogDropdown = $("<div/>").attr("id","myDropdown").addClass("dropdown-content");
+
+            for(var k=0; k<iconList.length; k++){
+                $dialogDropdown.append($("<div/>").addClass("dropdown-element").append($("<i/>").addClass("material-icons").text(iconList[k])));
+            }
+
+            $dialogBody.append($dialogDropdown);
 
             $dialogBody.append($("<input/>").attr("name", "itemName").attr("value", data.itemName));
+            $dialogBody.append($("<div/>").addClass("clearfix"));
 
             var $dialogFooter = $("<div/>").addClass("footer");
             var $buttonCreate = $("<button/>").attr("type", "button").addClass("positive button").append($("<i/>").addClass("material-icons").addClass("edit").text("save"));
 
             $dialogFooter.append($buttonCreate).append($("<div/>").addClass("clearfix"));
 
-            $dialogBody.append($dialogFooter);
+            $dialogFullbody.append($dialogBody);
+            $dialogFullbody.append($dialogFooter);
 
-            var dialog = createDialog($dialogBody, "Edit Item");
+            var dialog = createDialog($dialogFullbody, "Edit Item");
 
             $(dialog).on("click touch", ".popup-close", function(){
 
@@ -338,12 +373,15 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
             $(dialog).on("click touch", ".material-icons.edit", function(){
 
                 var itemName = $(this).closest("#popup").find("input[name='itemName']").val();
+                var iconName = $(this).closest("#popup").find("i[name='iconName']").html();
+                if (iconName=="clear") iconName = "";
 
                 var categoryItem = itemCategories.findOne({
                     itemId: data.itemId
                 });
 
-                categoryItem.itemName = (itemName);
+                categoryItem.itemName = itemName;
+                categoryItem.setItemIcon(iconName);
 
                 itemCategories.update(categoryItem);
 
@@ -373,8 +411,6 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
 
         });
 
-
     });
-
 
 })(jQuery);
