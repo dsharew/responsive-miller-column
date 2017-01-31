@@ -216,7 +216,7 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
             $dialogBody.append($("<div/>").addClass("clearfix"));
 
             var $dialogFooter = $("<div/>").addClass("footer");
-            var $buttonCreate = $("<button/>").attr("type", "button").addClass("positive button").append($("<i/>").addClass("material-icons").addClass("add").text("add"));
+            var $buttonCreate = $("<button/>").attr("type", "button").addClass("button create").append($("<i/>").addClass("material-icons").addClass("add").text("add"));
 
             $dialogFooter.append($buttonCreate).append($("<div/>").addClass("clearfix"));
 
@@ -231,7 +231,7 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
 
             });
 
-            $(dialog).on("click touch", ".material-icons.add", function(event){
+            $(dialog).find(".button.create").on("click touch", function(event){
 
                 var itemName = $(this).closest("#popup").find("input[name='itemName']").val();
                 var iconName = $(this).closest("#popup").find("i[name='iconName']").html();
@@ -273,7 +273,7 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
             $dialogBody.append("Are you sure you want to delete this item?");
 
             var $dialogFooter = $("<div/>").addClass("footer");
-            var $buttonCreate = $("<button/>").attr("type", "button").addClass("positive button").append($("<i/>").addClass("material-icons").addClass("delete").text("delete"));
+            var $buttonCreate = $("<button/>").attr("type", "button").addClass("delete button").append($("<i/>").addClass("material-icons").addClass("delete").text("delete"));
 
             $dialogFooter.append($buttonCreate).append($("<div/>").addClass("clearfix"));
 
@@ -287,7 +287,7 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
 
             });
 
-            $(dialog).on("click touch", ".material-icons.delete", function(){
+            $(dialog).find(".button.delete").on("click touch", function(){
 
                 var categoryItem = itemCategories.findOne({
                     itemId: data.itemId
@@ -370,7 +370,7 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
 
             });
 
-            $(dialog).on("click touch", ".material-icons.edit", function(){
+            $(dialog).find(".button.positive").on("click touch", function(){
 
                 var itemName = $(this).closest("#popup").find("input[name='itemName']").val();
                 var iconName = $(this).closest("#popup").find("i[name='iconName']").html();
