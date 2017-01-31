@@ -2,9 +2,6 @@
  * v1.2.2
  */
 
-var isEdge = !isIE && !!window.StyleMedia;
-var isIE = /*@cc_on!@*/false || !!document.documentMode;
-
 function Category() {
 
     var _this = this;
@@ -284,12 +281,7 @@ function guid() {
                 listParentAddedItem.data("has-children", true);
                 listParentAddedItem.attr("data-has-children", true);
                 if (!parentAlreadyWithChildren) {
-                    var nextIcon = $("<i/>").addClass("material-icons").text("navigate_next").addClass("has-children");
-                    
-                    if(isEdge || isIE)
-                        nextIcon.text("&#xE409;")
-                    
-                    listParentAddedItem.append();
+                    listParentAddedItem.append($("<i/>").addClass("material-icons").text("navigate_next").addClass("has-children"));
                 }
             }
             var colContainer = getMillerColContainers.call(this).filter("[data-category-id='" + addedItemData.categoryId + "']");
@@ -438,16 +430,10 @@ function guid() {
             if (getMillerColsBody.call(this).length == 0) { //if user has not build the miller ui structure using html manually
 
                 var preNav = $("<span/>")
-                    .addClass("miller-col-nav nav-prev hidden");
-                
-                var preIcon = $("<i/>")
+                    .addClass("miller-col-nav nav-prev hidden")
+                    .append($("<i/>")
                         .addClass("material-icons")
-                        .text("navigate_before")
-                
-                if(isEdge || isIE)
-                    preIcon.text("&#xE408;");
-                
-                preNav.append(preIcon);
+                        .text("navigate_before"));
 
 
                 var millerColsBody = $("<div/>")
@@ -464,15 +450,9 @@ function guid() {
 
                 var nextNav = $("<span/>")
                     .addClass("miller-col-nav nav-next hidden")
-                
-                var nextIcon = $("<i/>")
+                    .append($("<i/>")
                         .addClass("material-icons")
-                        .text("navigate_next")
-                
-                if(isEdge || isIE)
-                    preIcon.text("&#xE409;");
-                
-                nextNav.append(nextIcon);
+                        .text("navigate_next"));
 
                 $(this).append(preNav).append(millerColsBody).append(nextNav);
 
