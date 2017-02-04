@@ -1,4 +1,5 @@
 var CONSTANT_MAX_NUMBER_CATEGORIES = 6;
+var iconList = ["clear", "store", "call", "wifi", "portrait"];
 
 function findCategoryByParentId(categoriesCollection, parentId) {
 
@@ -58,8 +59,7 @@ function createChildrenCategoryItems(categoryItemCollection, categoriesCollectio
         if (category.getIsLowestLevel()) numChildren2 = 0;
 
         categoryItem.setItemName(category.getCategoryName() + " item " + i);
-        var listIcons = ["", "store", "call", "wifi", "portrait"];
-        categoryItem.setItemIcon(listIcons[parseInt(Math.random() * 6 - 1)]);
+        categoryItem.setItemIcon(iconList[parseInt(Math.random() * 6 - 1)]);
         categoryItem.setHasChildren(numChildren2 != 0);
         categoryItem.setNumChildren(numChildren2);
         categoryItem.setCategoryId(category.getCategoryId());
@@ -146,7 +146,7 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
         var itemCategories = db.addCollection('itemCategories');
         var $millerCol = $("#category-miller-cols-container");
 
-        var iconList = ["clear", "store", "call", "wifi", "portrait"];
+        
 
         showSpinner();
 

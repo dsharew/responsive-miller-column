@@ -63,10 +63,13 @@
 .miller-col-loading-container .miller-col-body {
     width: 100%;
     height: 100%;
-    overflow-y:overlay;
-    -webkit-overflow-scrolling: touch;
+}
+
+.miller-col-body {
+   -webkit-overflow-scrolling: touch;
     margin-top: 48px;
     padding-top: 0;
+    overflow-y: auto;
 }
 
 .miller-col-loading-container.col-loading .loading-icon-container {
