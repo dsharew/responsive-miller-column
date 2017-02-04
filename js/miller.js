@@ -120,6 +120,14 @@ function CategoryItem() {
         return _this.hasChildren
     };
 
+    _this.setNumChildren = function(numChildren) {
+        _this.numChildren = numChildren;
+        _this.setHasChildren(numChildren != 0);
+    }
+    
+    _this.getNumChildren = function(){
+        return _this.numChildren;
+    };
 
     _this.isDeletable = true;
     _this.setIsDeletable = function (isDeletable) {
@@ -371,6 +379,11 @@ function guid() {
                 millerColListItem.append(listItemActions);
             }
 
+            if(item.numChildren != null && item.numChildren != 0){
+                
+                millerColListItem.append($("<span/>").addClass("num-children-badge").text(item.numChildren));
+                
+            }
 
             return millerColListItem;
         }

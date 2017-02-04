@@ -175,6 +175,19 @@
     min-height: 44px;
 }
 
+.miller-col-list-item .num-children-badge{
+    border-radius: 50%;
+    padding: 5px;
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #666;
+    text-align: center;
+    position: absolute;
+    right: 35px;
+    top: 50%;
+    transform: translateY(-50%);        
+}
+
 .miller-col-list-item > * {
     vertical-align: middle;
 }
@@ -274,3 +287,10 @@
         -webkit-transform: rotate(360deg);
     }
 }
+
+/* hide badge icon when user hovers on list item being on editable mode */
+
+.miller-cols-container-wrapper[data-is-read-only="false"] .miller-col-list-item:hover .num-children-badge{
+    display: none;
+}
+

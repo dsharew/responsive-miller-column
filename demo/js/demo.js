@@ -61,6 +61,7 @@ function createChildrenCategoryItems(categoryItemCollection, categoriesCollectio
         var listIcons = ["", "store", "call", "wifi", "portrait"];
         categoryItem.setItemIcon(listIcons[parseInt(Math.random() * 6 - 1)]);
         categoryItem.setHasChildren(numChildren2 != 0);
+        categoryItem.setNumChildren(numChildren2);
         categoryItem.setCategoryId(category.getCategoryId());
 
         var parentCategoryItemId = parentCategoryItem == null ? null : parentCategoryItem.getItemId();
