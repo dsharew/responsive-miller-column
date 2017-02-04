@@ -63,6 +63,10 @@
 .miller-col-loading-container .miller-col-body {
     width: 100%;
     height: 100%;
+    overflow-y:overlay;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 48px;
+    padding-top: 0;
 }
 
 .miller-col-loading-container.col-loading .loading-icon-container {
@@ -159,13 +163,6 @@
     max-width: 400px;
 }
 
-.miller-col-body {
-    -webkit-overflow-scrolling: touch;
-    margin-top: 48px;
-    padding-top: 0;
-    overflow-y: auto;
-}
-
 .miller-col-list-item {
     padding: 10px;
     font-weight: 300;
@@ -175,6 +172,7 @@
     position: relative;
     text-align: left;
     word-break: break-all;
+    min-height: 44px;
 }
 
 .miller-col-list-item > * {
@@ -192,8 +190,10 @@
 }
 
 .miller-col-list-item .has-children {
-    float: right;
-    padding-top: 2px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
 }
 
 .miller-col-list-item .list-item-actions {
