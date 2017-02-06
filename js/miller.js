@@ -347,6 +347,17 @@ function guid() {
                 listDeletedItem.remove();
 
             return this;
+            
+        }else if("destroy" == args[0]){
+            
+            $(this).empty();
+           
+            $(this).removeAttr("millerized");
+            $(this).removeAttr("data-is-read-only");
+             $(this).removeAttr("style");
+            
+            return this;
+            
         }
 
         function buildColListItem(item, readOnly) {
