@@ -350,11 +350,13 @@ function guid() {
             
         }else if("destroy" == args[0]){
             
+            $(this).find("*").addBack().off();
+            
             $(this).empty();
            
             $(this).removeAttr("millerized");
             $(this).removeAttr("data-is-read-only");
-             $(this).removeAttr("style");
+            $(this).removeAttr("style");
             
             return this;
             
