@@ -352,6 +352,8 @@ function guid() {
             
             $(this).find("*").addBack().off();
             
+            $(window).unbind("resize.") + $(this).attr("id");
+            
             $(this).empty();
            
             $(this).removeAttr("millerized");
@@ -958,7 +960,7 @@ function guid() {
             });
 
 
-            $(window).on("resize.miller_column", function (event) {
+            $(window).on("resize." + $(millerColumn).attr("id"), function (event) {
 
                 waitForFinalEvent(function () {
 
