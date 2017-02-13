@@ -348,21 +348,37 @@ function guid() {
 
             return this;
             
-        }else if("destroy" == args[0]){
-            
-            $(this).find("*").addBack().off();
-            
-            $(window).unbind("resize.") + $(this).attr("id");
-            
-            $(this).empty();
-           
-            $(this).removeAttr("millerized");
-            $(this).removeAttr("data-is-read-only");
-            $(this).removeAttr("style");
-            
-            return this;
-            
+        }else if ("destroy" == args[0]) {
+
+            if (isInitialized.call(this)) {
+                // remove all miller-column object events
+                $(this).find("*").addBack().off();
+
+                // remove all window events related to miller-column object
+                $(window).off("." + $(this).attr("id"));
+
+                // remove specific attributes
+                $(this).removeAttr("millerized");
+                $(this).removeAttr("data-is-read-only");
+                $(this).removeAttr("style");
+
+                // empty miller-column object
+                $(this).empty();
+
+                if (isDebugEnabled)
+                    console.log("miller-column destroyed !");
+            } else {
+                if (isDebugEnabled)
+                    console.log("miller-column is not initialized so nothing to destroy ...");
+            }
+
+            return;
+
+        } else if ("ismillerized" == args[0]) {
+
+            return isInitialized.call(this);
         }
+
 
         function buildColListItem(item, readOnly) {
 
@@ -964,6 +980,9 @@ function guid() {
 
                 waitForFinalEvent(function () {
 
+                    if (!isInitialized.call(millerColumn))
+                        return;
+                    
                     if (isDebugEnabled) {
                         console.log("window resized..");
                     }
