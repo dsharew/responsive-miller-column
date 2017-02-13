@@ -25,58 +25,57 @@ Data class that defines the columns.
 ```javascript
 	function Category() {
 
-	    var _this = this;
+    var _this = this;
 
-	    _this.categoryId = guid();
+    _this.categoryId = guid();
 
-	    _this.setCategoryId = function (categoryId) {
+    _this.setCategoryId = function (categoryId) {
 
-		_this.categoryId = categoryId;
+        _this.categoryId = categoryId;
 
-	    }
+    };
 
-	    _this.getCategoryId = function () {
-		return _this.categoryId;
-	    }
-
-
-	    _this.setCategoryName = function (categoryName) {
-
-		_this.categoryName = categoryName;
-
-	    }
-	    _this.getCategoryName = function () {
-		return _this.categoryName;
-	    }
+    _this.getCategoryId = function () {
+        return _this.categoryId;
+    };
 
 
-	    _this.setParentId = function (parentId) {
+    _this.setCategoryName = function (categoryName) {
 
-		_this.parentId = parentId;
+        _this.categoryName = categoryName;
 
-	    }
-	    _this.getParentId = function () {
-		return _this.parentId;
-	    }
-
-
-	    _this.setIsLowestLevel = function (isLowestLevel) {
-		_this.isLowestLevel = isLowestLevel;
-	    }
-	    _this.getIsLowestLevel = function () {
-		return _this.isLowestLevel
-	    }
-
-	  _this.setItems = function (categoryItems) {
-		_this.items = categoryItems;
-	    }
-	    
-	  _this.getItems = function () {
-		return _this.items
-	    }
+    };
+    _this.getCategoryName = function () {
+        return _this.categoryName;
+    };
 
 
-	}
+    _this.setParentId = function (parentId) {
+
+        _this.parentId = parentId;
+
+    };
+    _this.getParentId = function () {
+        return _this.parentId;
+    };
+
+
+    _this.setIsLowestLevel = function (isLowestLevel) {
+        _this.isLowestLevel = isLowestLevel;
+    };
+    _this.getIsLowestLevel = function () {
+        return _this.isLowestLevel
+    };
+
+    _this.setItems = function (categoryItems) {
+        _this.items = categoryItems;
+    };
+    _this.getItems = function () {
+        return _this.items
+    }
+
+
+}
 ```
 
 <h5> CategoryItem </h5>
@@ -94,58 +93,76 @@ function CategoryItem() {
 
         _this.itemId = itemId;
 
-    }
+    };
 
     _this.getItemId = function () {
         return _this.itemId;
-    }
+    };
 
 
     _this.setItemName = function (itemName) {
 
         _this.itemName = itemName;
 
-    }
+    };
     _this.getItemName = function () {
         return _this.itemName;
-    }
+    };
+
+
+    _this.setItemIcon = function (itemIcon) {
+
+        _this.itemIcon = itemIcon;
+
+    };
+    _this.getItemIcon = function () {
+        return _this.itemIcon;
+    };
 
 
     _this.setParentId = function (parentId) {
 
         _this.parentId = parentId;
 
-    }
+    };
     _this.getParentId = function () {
         return _this.parentId;
-    }
+    };
 
 
     _this.setCategoryId = function (categoryId) {
 
         _this.categoryId = categoryId;
 
-    }
+    };
     _this.getCategoryId = function () {
         return _this.categoryId;
-    }
+    };
 
 
     _this.setHasChildren = function (hasChildren) {
         _this.hasChildren = hasChildren;
-    }
+    };
     _this.getHasChildren = function () {
         return _this.hasChildren
-    }
+    };
 
+    _this.setNumChildren = function(numChildren) {
+        _this.numChildren = numChildren;
+        _this.setHasChildren(numChildren != 0);
+    }
+    
+    _this.getNumChildren = function(){
+        return _this.numChildren;
+    };
 
-    _this.isDeleteable = true;
-    _this.setIsDeletable = function (isDeleteable) {
-        _this.isDeleteable = isDeleteable;
-    }
-    _this.getIsDeleteable = function () {
-        return _this.isDeleteable
-    }
+    _this.isDeletable = true;
+    _this.setIsDeletable = function (isDeletable) {
+        _this.isDeletable = isDeletable;
+    };
+    _this.getIsDeletable = function () {
+        return _this.isDeletable
+    };
 
 
 }
