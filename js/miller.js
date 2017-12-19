@@ -1,5 +1,5 @@
 /**
- * v1.3.1.1
+ * v1.3.2.0
  */
 
 function Category() {
@@ -210,9 +210,21 @@ function guid() {
                         return;
                     }
 
+
                     var lastVisibleCol = getLastVisibleCol.call(this);
-                    var selectedCol = lastVisibleCol.is(".col-loading") ? lastVisibleCol.prev() : lastVisibleCol;
-                    var selectedListItem = selectedCol.find(getColListItemSelector()).filter(".selected");
+                    var lastVisibleNonColLoadingContainer = lastVisibleCol.is(".col-loading") ? lastVisibleCol.prev() : lastVisibleCol;
+
+                    if(lastVisibleNonColLoadingContainer.length !== 0 && args[1].categoryId === lastVisibleNonColLoadingContainer.data("category-id")){
+
+                        console.warn("Category is already added, ignoring addCol call ...");
+                        hideLoadingCol.call(this);
+                        return;
+
+                    }
+
+
+                    var selectedListItem = lastVisibleNonColLoadingContainer.find(getColListItemSelector()).filter(".selected");
+
 
                     for (var j = 0; args[1].items && j < args[1].items.length; ++j) {
 

@@ -180,21 +180,26 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
 
             console.log("item selected.. data: " + data.itemId);
 
-            var category = findCategoryByParentId(categories, data.categoryId);
-            var itemCategories2 = itemCategories.find({
-                $and: [
-                    {
-                        categoryId: category.getCategoryId()
-                    },
-                    {
-                        parentId: data.itemId
-                    }
-               ]
-            });
+            //setTimeout is used to mock the network delay when fetching category data from remote server
+            setTimeout(function(){
 
-            category.items = itemCategories2;
+                var category = findCategoryByParentId(categories, data.categoryId);
+                var itemCategories2 = itemCategories.find({
+                    $and: [
+                        {
+                            categoryId: category.getCategoryId()
+                        },
+                        {
+                            parentId: data.itemId
+                        }
+                    ]
+                });
 
-            $millerCol.millerColumn("addCol", category);
+                category.items = itemCategories2;
+
+                $millerCol.millerColumn("addCol", category);
+
+            }, 100)
 
         });
 
