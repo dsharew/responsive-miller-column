@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="miller.css"/>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="miller.js"></script>
+
+</head>
+
+<body>
+
+<div id="category-miller-cols-container">
+</div>
+
+<script>
+
+var dummyData = {
+	   "categoryId":"63ef58e5-fc92-9934-9b4c-ca5f457a425b",
+	   "categoryName":"Category 2",
+	   "parentId":"53732c02-f3d3-10de-1710-c74a8e3df260",
+	   "isLowestLevel":false,
+	   "items":[
+	      {
+		 "itemId":"50b73f3a-a302-14dc-e61c-3da72876e712",
+		 "isDeleteable":true,
+		 "itemName":"Category 2 item 1",
+		 "hasChildren":false,
+		 "categoryId":"63ef58e5-fc92-9934-9b4c-ca5f457a425b",
+		 "parentId":"d39e098e-5ecb-3ba5-8fd8-fa20c7685e8c"
+	      },
+	      {
+		 "itemId":"d98c4bfc-cae5-3355-08b8-84d0bc4edd59",
+		 "isDeleteable":true,
+		 "itemName":"Category 2 item 2",
+		 "hasChildren":true,
+		 "categoryId":"63ef58e5-fc92-9934-9b4c-ca5f457a425b",
+		 "parentId":"d39e098e-5ecb-3ba5-8fd8-fa20c7685e8c"
+	      },
+	      {
+		 "itemId":"50603731-b62e-d0d2-dda8-493e9882651f",
+		 "isDeleteable":true,
+		 "itemName":"Category 2 item 3",
+		 "hasChildren":true,
+		 "categoryId":"63ef58e5-fc92-9934-9b4c-ca5f457a425b",
+		 "parentId":"d39e098e-5ecb-3ba5-8fd8-fa20c7685e8c"
+	      },
+	      {
+		 "itemId":"72942b44-d011-1530-26b0-aa7f3351209e",
+		 "isDeleteable":true,
+		 "itemName":"Category 2 item 4",
+		 "hasChildren":true,
+		 "categoryId":"63ef58e5-fc92-9934-9b4c-ca5f457a425b",
+		 "parentId":"d39e098e-5ecb-3ba5-8fd8-fa20c7685e8c"
+	      },
+	      {
+		 "itemId":"34644c0c-56f2-dc59-a649-2ea8d7195e97",
+		 "isDeleteable":true,
+		 "itemName":"Category 2 item 5",
+		 "hasChildren":false,
+		 "categoryId":"63ef58e5-fc92-9934-9b4c-ca5f457a425b",
+		 "parentId":"d39e098e-5ecb-3ba5-8fd8-fa20c7685e8c"
+	      }
+	   ]
+	}
+
+
+$("#category-miller-cols-container").millerColumn({
+	    initData: dummyData
+	});
+
+</script>
+
+</body>
+
+</html>
+

@@ -129,7 +129,98 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
 
         $millerCol.millerColumn({
             isReadOnly: isReadOnly,
-            initData: rootCategory
+            initData: {
+       "categoryId":"63ef58e5-fc92-9934-9b4c-ca5f457a425b",
+       "categoryName":"Category 1",
+       "parentId":"53732c02-f3d3-10de-1710-c74a8e3df260",
+       "isLowestLevel":false,
+       "items":[
+          {
+         "itemId":"50b73f3a-a302-14dc-e61c-3da72876e712",
+         "isDeleteable":true,
+         "itemName":"Category 2 item 1",
+         "hasChildren":false,
+         "categoryId":"63ef58e5-fc92-9934-9b4c-ca5f457a425b",
+         "parentId":"d39e098e-5ecb-3ba5-8fd8-fa20c7685e8c",
+         "childCategory":{
+
+                "categoryId":"11abbe26-3710-11e8-9aff-f74f3f924392",
+                "categoryName":"Category 2",
+                "parentId":"53732c02-f3d3-10de-1710-c74a8e3df260",
+                "isLowestLevel":false,
+                "items": [
+                     {
+                     "itemId":"00000000-b62e-d0d2-dda8-493e9882651f",
+                     "isDeleteable":true,
+                     "itemName":"Category 2 item 1",
+                     "hasChildren":true,
+                     "categoryId":"11abbe26-3710-11e8-9aff-f74f3f924392",
+                     "parentId":"50b73f3a-a302-14dc-e61c-3da72876e712",
+                     "childCategory": {
+
+                        "categoryId":"6341f200-3710-11e8-b6b5-3ba3ac89fea1",
+                        "categoryName":"Category 3",
+                        "parentId":"00000000-b62e-d0d2-dda8-493e9882651f",
+                        "isLowestLevel":true,
+                        "items": [
+                            {
+                             "itemId":"952f7152-3710-11e8-b107-a321e1bca773",
+                             "isDeleteable":true,
+                             "itemName":"Category 3 item 1",
+                             "hasChildren":true,
+                             "categoryId":"6341f200-3710-11e8-b6b5-3ba3ac89fea1",
+                             "parentId":"00000000-b62e-d0d2-dda8-493e9882651f"
+                              }
+                        ]
+
+                     }
+                      },
+                      {
+                     "itemId":"72942b44-d011-1530-26b0-99993351209e",
+                     "isDeleteable":true,
+                     "itemName":"Category 2 item 2",
+                     "hasChildren":true,
+                     "categoryId":"11abbe26-3710-11e8-9aff-f74f3f924392",
+                     "parentId":"50b73f3a-a302-14dc-e61c-3da72876e712"
+                      }
+                ]
+            }   
+          },
+          {
+         "itemId":"d98c4bfc-cae5-3355-08b8-84d0bc4edd59",
+         "isDeleteable":true,
+         "itemName":"Category 2 item 2",
+         "hasChildren":true,
+         "categoryId":"63ef58e5-fc92-9934-9b4c-ca5f457a425b",
+         "parentId":"d39e098e-5ecb-3ba5-8fd8-fa20c7685e8c"
+          },
+          {
+         "itemId":"50603731-b62e-d0d2-dda8-493e9882651f",
+         "isDeleteable":true,
+         "itemName":"Category 2 item 3",
+         "hasChildren":true,
+         "categoryId":"63ef58e5-fc92-9934-9b4c-ca5f457a425b",
+         "parentId":"d39e098e-5ecb-3ba5-8fd8-fa20c7685e8c"
+          },
+          {
+         "itemId":"72942b44-d011-1530-26b0-aa7f3351209e",
+         "isDeleteable":true,
+         "itemName":"Category 2 item 4",
+         "hasChildren":true,
+         "categoryId":"63ef58e5-fc92-9934-9b4c-ca5f457a425b",
+         "parentId":"d39e098e-5ecb-3ba5-8fd8-fa20c7685e8c"
+          },
+          {
+         "itemId":"34644c0c-56f2-dc59-a649-2ea8d7195e97",
+         "isDeleteable":true,
+         "itemName":"Category 2 item 5",
+         "hasChildren":false,
+         "categoryId":"63ef58e5-fc92-9934-9b4c-ca5f457a425b",
+         "parentId":"d39e098e-5ecb-3ba5-8fd8-fa20c7685e8c"
+          }
+       ]
+    }
+
         });
 
     }, 100);
