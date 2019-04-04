@@ -1040,8 +1040,10 @@ function guid() {
                 //Firing edit-column-title event.
                 var data = getCategory.call(currentColContainer);
 
-                if (parentColContainer)
-                    data.parentId = $(parentColContainer).find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
+                if (parentColContainer){
+                  data.parentId = $(parentColContainer).find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
+                  data.prevColumnId = $(parentColContainer).find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("category-id");
+                }
 
                 $(currentColContainer).trigger("edit-column-title", data);
 

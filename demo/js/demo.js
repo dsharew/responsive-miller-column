@@ -368,8 +368,6 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
             var $dialogFullbody = $("<div/>");
             var $dialogBody  = $("<div/>").addClass("middle-body");
 
-            $dialogBody.append($("<i/>").attr("id","element-icon").attr("name", "iconName").addClass("material-icons").addClass("dropbtn").text("clear").attr("onclick", "toggleDropdown()"));
-
             var $dialogDropdown = $("<div/>").attr("id","myDropdown").addClass("dropdown-content");
 
             for(var k=0; k<iconList.length; k++){
@@ -400,8 +398,6 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
             $(dialog).find(".button.create").on("click touch", function(event){
 
                 var catName = $(this).closest("#popup").find("input[name='categoryName']").val();
-                var iconName = $(this).closest("#popup").find("i[name='iconName']").html();
-                if (iconName=="clear") iconName = "";
 
                 data.categoryName = catName;
 
@@ -539,12 +535,12 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
                     itemId: data.itemId
                 });
 
-                categoryItem.itemName = itemName;
-                categoryItem.setItemIcon(iconName);
+                data.itemName = itemName;
+                data.iconName= iconName;
 
-                itemCategories.update(categoryItem);
+                //itemCategories.update(data);
 
-                $millerCol.millerColumn("updateItem", categoryItem);
+                $millerCol.millerColumn("updateItem", data);
 
                 $("#popup").remove();
 
