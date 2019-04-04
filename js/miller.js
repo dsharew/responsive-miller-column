@@ -325,7 +325,21 @@ function guid() {
             return this;
 
 
-        } else if ("updateItem" == args[0]) {
+        } else if ("updateCategory" == args[0]) {
+
+            var updatedCategoryData = args[1];
+
+            var updatedCategory = $(this).find(getColContainerSelector()).filter("[data-category-id = '" + updatedCategoryData.categoryId + "']");
+
+            if (null != updatedCategory) {
+                updatedCategory.find(".miller-col-title-text").text(updatedCategoryData.categoryName);
+                updatedCategory.attr("data-category-name", updatedCategoryData.categoryName);
+                updatedCategory.attr("data-is-lowest-level", updatedCategoryData.isLowestLevel);
+            }
+
+            return this;
+
+        }else if ("updateItem" == args[0]) {
 
             var updatedtemData = args[1];
 
@@ -1025,8 +1039,10 @@ function guid() {
                 //Firing edit-column-title event.
                 var data = getCategory.call(currentColContainer);
 
-                if (parentColContainer)
-                    data.parentId = $(parentColContainer).find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
+                if (parentColContainer){
+                  var parentData = getCategory.call(parentColContainer);
+                  data.parentId = parentData.categoryId;
+                }
 
                 $(currentColContainer).trigger("edit-column-title", data);
 
