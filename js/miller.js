@@ -332,7 +332,8 @@ function guid() {
             var updatedCategory = $(this).find(getColContainerSelector()).filter("[data-category-id = '" + updatedCategoryData.categoryId + "']");
 
             if (null != updatedCategory) {
-                updatedCategory.find(".miller-col-title-text").text(updatedCategoryData.categoryName);
+                console.log("updating category name");
+                updatedCategory.find(".miller-col-title-text").find("span").first().text(updatedCategoryData.categoryName);
                 updatedCategory.attr("data-category-name", updatedCategoryData.categoryName);
                 updatedCategory.attr("data-is-lowest-level", updatedCategoryData.isLowestLevel);
             }
@@ -1039,10 +1040,8 @@ function guid() {
                 //Firing edit-column-title event.
                 var data = getCategory.call(currentColContainer);
 
-                if (parentColContainer){
-                  var parentData = getCategory.call(parentColContainer);
-                  data.parentId = parentData.categoryId;
-                }
+                if (parentColContainer)
+                    data.parentId = $(parentColContainer).find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
 
                 $(currentColContainer).trigger("edit-column-title", data);
 
