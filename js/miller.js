@@ -1022,7 +1022,7 @@ function guid() {
                 var currentColContainer = $(this).closest(getColContainerSelector());
                 var parentColContainer = currentColContainer.prev();
 
-                //Firing add-item event.
+                //Firing edit-column-title event.
                 var data = getCategory.call(currentColContainer);
 
                 if (parentColContainer)
