@@ -1028,10 +1028,10 @@ function guid() {
                 if (parentColContainer)
                     data.parentId = $(parentColContainer).find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
 
-                $(currentColContainer).trigger("add-item", data);
+                $(currentColContainer).trigger("edit-column-title", data);
 
                 if (isDebugEnabled) {
-                    console.log("fired add item event: " + JSON.stringify(data));
+                    console.log("fired edit-column-title event: " + JSON.stringify(data));
                 }
 
             });
