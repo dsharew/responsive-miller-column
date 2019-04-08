@@ -16,6 +16,8 @@ Miller columns (also known as Cascading) are a browsing/visualization technique 
 <h2>Dependency</h2>
 _jQuery_
 
+<h2>How to install</h2>
+```npm i responsive-miller-column```
 
 <h2> Interfaces </h2>
 The plugin defines two data classes so far. 
