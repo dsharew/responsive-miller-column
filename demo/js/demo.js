@@ -184,7 +184,7 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
                      "parentId":"50b73f3a-a302-14dc-e61c-3da72876e712"
                       }
                 ]
-            }   
+            }
           },
           {
          "itemId":"d98c4bfc-cae5-3355-08b8-84d0bc4edd59",
@@ -237,7 +237,7 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
         var itemCategories = db.addCollection('itemCategories');
         var $millerCol = $("#category-miller-cols-container");
 
-        
+
 
         showSpinner();
 
@@ -346,6 +346,64 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
                 itemCategories.insert(categoryItem);
 
                 $millerCol.millerColumn("addItem", categoryItem);
+
+                $("#popup").remove();
+
+            });
+
+            $("body").append(dialog);
+
+            dialog= dialog.popup({
+                width: 400,
+                height: "auto",
+                top: 100
+            });
+
+            dialog.open();
+
+        });
+
+        $millerCol.on("edit-column-title", ".miller-col-container", function (event, data) {
+
+            var $dialogFullbody = $("<div/>");
+            var $dialogBody  = $("<div/>").addClass("middle-body");
+
+            var $dialogDropdown = $("<div/>").attr("id","myDropdown").addClass("dropdown-content");
+
+            for(var k=0; k<iconList.length; k++){
+                 $dialogDropdown.append($("<div/>").addClass("dropdown-element").append($("<i/>").addClass("material-icons").text(iconList[k])));
+            }
+
+            $dialogBody.append($dialogDropdown);
+
+            $dialogBody.append($("<input/>").attr("name", "categoryName"));
+            $dialogBody.append($("<div/>").addClass("clearfix"));
+
+            var $dialogFooter = $("<div/>").addClass("footer");
+            var $buttonCreate = $("<button/>").attr("type", "button").addClass("button create").append($("<i/>").addClass("material-icons").addClass("add").text("add"));
+
+            $dialogFooter.append($buttonCreate).append($("<div/>").addClass("clearfix"));
+
+            $dialogFullbody.append($dialogBody);
+            $dialogFullbody.append($dialogFooter);
+
+            var dialog = createDialog($dialogFullbody, "Update: " + data.categoryName);
+
+            $(dialog).on("click touch", ".popup-close", function(){
+
+                $("#popup").remove();
+
+            });
+
+            $(dialog).find(".button.create").on("click touch", function(event){
+
+                var catName = $(this).closest("#popup").find("input[name='categoryName']").val();
+
+                data.categoryName = catName;
+
+                //itemCategories.insert(categoryItem);
+
+                $millerCol.millerColumn("updateCategory", data);
 
                 $("#popup").remove();
 
@@ -477,12 +535,12 @@ function reInitializeMillerCol($millerCol, isReadOnly, categories, itemCategorie
                     itemId: data.itemId
                 });
 
-                categoryItem.itemName = itemName;
-                categoryItem.setItemIcon(iconName);
+                data.itemName = itemName;
+                data.iconName= iconName;
 
-                itemCategories.update(categoryItem);
+                //itemCategories.update(data);
 
-                $millerCol.millerColumn("updateItem", categoryItem);
+                $millerCol.millerColumn("updateItem", data);
 
                 $("#popup").remove();
 

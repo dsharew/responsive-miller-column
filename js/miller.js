@@ -124,7 +124,7 @@ function CategoryItem() {
         _this.numChildren = numChildren;
         _this.setHasChildren(numChildren != 0);
     }
-    
+
     _this.getNumChildren = function(){
         return _this.numChildren;
     };
@@ -266,7 +266,9 @@ function guid() {
                     millerColTitleText = $("<div>").addClass("miller-col-title-text").append($("<span/>").text(category.categoryName));
 
                 if (!readOnly) {
-                    var millerColAction = $("<span/>").addClass("miller-col-actions").append($("<i/>").addClass("material-icons").addClass("action-add").text("add"));
+                    var millerColAction = $("<span/>").addClass("miller-col-actions");
+                    millerColAction.append($("<i/>").addClass("material-icons").addClass("action-edit").addClass("miller-col-title-icons").text("edit"));
+                    millerColAction.append($("<i/>").addClass("material-icons").addClass("action-add").addClass("miller-col-title-icons").text("add"));
                     millerColTitleText.append(millerColAction);
                 }
 
@@ -323,7 +325,22 @@ function guid() {
             return this;
 
 
-        } else if ("updateItem" == args[0]) {
+        } else if ("updateCategory" == args[0]) {
+
+            var updatedCategoryData = args[1];
+
+            var updatedCategory = $(this).find(getColContainerSelector()).filter("[data-category-id = '" + updatedCategoryData.categoryId + "']");
+
+            if (null != updatedCategory) {
+                console.log("updating category name");
+                updatedCategory.find(".miller-col-title-text").find("span").first().text(updatedCategoryData.categoryName);
+                updatedCategory.attr("data-category-name", updatedCategoryData.categoryName);
+                updatedCategory.attr("data-is-lowest-level", updatedCategoryData.isLowestLevel);
+            }
+
+            return this;
+
+        }else if ("updateItem" == args[0]) {
 
             var updatedtemData = args[1];
 
@@ -362,7 +379,7 @@ function guid() {
                 listDeletedItem.remove();
 
             return this;
-            
+
         }else if ("destroy" == args[0]) {
 
             if (isInitialized.call(this)) {
@@ -426,9 +443,9 @@ function guid() {
             }
 
             if(item.numChildren != null && item.numChildren != 0){
-                
+
                 millerColListItem.append($("<span/>").addClass("num-children-badge").text(item.numChildren));
-                
+
             }
 
             return millerColListItem;
@@ -935,7 +952,7 @@ function guid() {
 
                  var children = currentColContainer.data("children");
 
-                 console.log("children:" + children)  
+                 console.log("children:" + children)
 
                  if(children){
 
@@ -943,7 +960,7 @@ function guid() {
 
                         if(data.itemId === children[i].itemId){
 
-                            if(children[i].childCategory){ 
+                            if(children[i].childCategory){
 
                                 $(millerColumn).millerColumn("addCol", children[i].childCategory);
 
@@ -954,7 +971,7 @@ function guid() {
 
                     }
 
-                 } 
+                 }
 
                 if (isDebugEnabled) {
                     console.log("fired item-selected event: " + JSON.stringify(data))
@@ -1015,6 +1032,27 @@ function guid() {
 
             });
 
+            getMillerColsBody.call(millerColumn).on("click", ".miller-col-actions .action-edit", function () {
+
+                var currentColContainer = $(this).closest(getColContainerSelector());
+                var parentColContainer = currentColContainer.prev();
+
+                //Firing edit-column-title event.
+                var data = getCategory.call(currentColContainer);
+
+                if (parentColContainer){
+                  data.parentId = $(parentColContainer).find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("item-id");
+                  data.prevColumnId = $(parentColContainer).find(getColListItemSelector()).filter(SELECTOR_IS_SELECTED).data("category-id");
+                }
+
+                $(currentColContainer).trigger("edit-column-title", data);
+
+                if (isDebugEnabled) {
+                    console.log("fired edit-column-title event: " + JSON.stringify(data));
+                }
+
+            });
+
 
             $(window).on("resize." + $(millerColumn).attr("id"), function (event) {
 
@@ -1022,7 +1060,7 @@ function guid() {
 
                     if (!isInitialized.call(millerColumn))
                         return;
-                    
+
                     if (isDebugEnabled) {
                         console.log("window resized..");
                     }
