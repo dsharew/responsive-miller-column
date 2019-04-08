@@ -1,0 +1,23 @@
+{
+  "name": "responsive-miller-column",
+  "version": "1.0.0",
+  "description": " Jquery plugin that implements Miller Columns with responsive design.",
+  "main": "js/miller.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsharew/responsive-miller-column.git"
+  },
+  "keywords": [
+    "jquery-plugin",
+    "ecosystem:jquery"
+  ],
+  "author": "dsharew",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dsharew/responsive-miller-column/issues"
+  },
+  "homepage": "https://github.com/dsharew/responsive-miller-column#readme"
+}
